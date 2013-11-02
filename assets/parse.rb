@@ -34,7 +34,7 @@ doc = Nokogiri::HTML(open('http://hrum.com.ua/restaurants/all/kiev')).css('.item
       lat: geo_lat,
       lng: geo_lng,
       logo: {
-        src: logo_src.sub('/images.','/public/media/logo'),
+        src: logo_src.sub('/images.','/media/logo'),
         alt: logo_alt
       },
       address: {
