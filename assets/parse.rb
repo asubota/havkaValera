@@ -25,7 +25,7 @@ doc.css('.item_box').each do |item|
 
 
   r = {
-    key => {
+      name: key,
       title: title,
       lat: geo_lat,
       lng: geo_lng,
@@ -46,11 +46,17 @@ doc.css('.item_box').each do |item|
         cost: delivery[0],
         currency: delivery[1].sub('грн.','UAH').strip
       }
-    }
+    
   }
 
   restaurants.push r
 end
 
+
 rests = restaurants.map(&:to_json).join(",\n")
-File.open('restaurants.json', 'w') { |file| file.write "[#{rests}]" }
+
+rests = "var restaurants = [#{rests}];
+
+exports.restaurants = restaurants;"
+
+File.open('restaurants.json', 'w') { |file| file.write rests }
