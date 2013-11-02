@@ -26,12 +26,15 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 
+app.use(express.cookieParser('keyboard cat'));
+
+
+app.use(express.session({ secret: 'keyboard cat' }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use(express.cookieParser('your secret here'));
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -61,9 +64,7 @@ passport.use(new FacebookStrategy({
         callbackURL    : "http://havka.sona-studio.com/auth/facebook/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-        User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-          return done(err, user);
-        });
+        return done(null, profile);
     }
 ));
 
@@ -72,6 +73,8 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/town' }),
     function(req, res) {
         // Successful authentication, redirect home.
+        res.send( "aaaaaaaaaaaaaaaaa" );
+
         console.log( req.session );
         console.log( req.user );
         
