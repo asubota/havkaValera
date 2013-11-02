@@ -6,6 +6,8 @@ public class Restaurant {
     public final String mName;
     public final String mImageUrl;
 
+    private String description;
+
     private String mAddress;
     private float mLat;
     private float mLng;

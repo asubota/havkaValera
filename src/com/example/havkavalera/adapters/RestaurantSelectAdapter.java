@@ -43,10 +43,12 @@ public class RestaurantSelectAdapter extends BaseAdapter {
 
         NetworkImageView restaurantImageView = (NetworkImageView) view.findViewById(R.id.restaurant_icon);
         TextView restaurantName = (TextView) view.findViewById(R.id.restaurant_name);
+        TextView restaurantAddress = (TextView) view.findViewById(R.id.address);
 
         Restaurant restaurant = getItem(position);
         restaurantImageView.setImageUrl(restaurant.mImageUrl, VolleySingleton.getInstance(context).getImageLoader());
         restaurantName.setText(restaurant.mName);
+        restaurantAddress.setText(restaurant.getAddress());
 
         return view;
     }

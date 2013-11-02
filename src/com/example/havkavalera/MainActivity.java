@@ -22,9 +22,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro);
-
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        String url = "https://www.googleapis.com/books/v1/volumes?q=Harry&maxResults=1&projection=lite";
     }
 
     public void onSelectCategoryClick(View view) {
