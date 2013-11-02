@@ -1,4 +1,4 @@
-package com.example.havkavalera.specify_dialog;
+package com.havkavalera.app.specify_dialog;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import com.example.havkavalera.R;
-import com.example.havkavalera.adapters.CategorySelectAdapter;
-import com.example.havkavalera.mock.MockCategoryList;
-import com.example.havkavalera.model.Category;
+import com.havkavalera.app.R;
+import com.havkavalera.app.adapters.CategorySelectAdapter;
+import com.havkavalera.app.mock.MockCategoryList;
+import com.havkavalera.app.model.Category;
 import com.markupartist.android.widget.PullToRefreshListView;
 
 import java.util.List;

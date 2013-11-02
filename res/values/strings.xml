@@ -7,4 +7,6 @@
     <string name="order">Order</string>
     <string name="choose_category">Choose Category</string>
     <string name="choose_restaurant">Choose Restaurant</string>
+    <string name="search">Search</string>
+    <string name="search_in_distance">Search in radius:</string>
 </resources>

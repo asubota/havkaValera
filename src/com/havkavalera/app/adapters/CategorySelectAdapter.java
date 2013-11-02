@@ -1,4 +1,4 @@
-package com.example.havkavalera.adapters;
+package com.havkavalera.app.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,9 +12,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
-import com.example.havkavalera.R;
-import com.example.havkavalera.VolleySingleton;
-import com.example.havkavalera.model.Category;
+import com.havkavalera.app.R;
+import com.havkavalera.app.VolleySingleton;
+import com.havkavalera.app.model.Category;
 
 import java.util.List;
 

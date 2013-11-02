@@ -24,37 +24,57 @@
             android:contentDescription="@string/welcome_icon"
             />
 
-    <TableLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
-            android:layout_marginTop="@dimen/dimen_50dp"
             android:layout_margin="@dimen/dimen_10dp"
             >
+        <RelativeLayout
+                android:id="@+id/search_distance"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                >
+            <TextView
+                    android:id="@+id/distance_desc"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:layout_marginLeft="@dimen/dimen_10dp"
+                    android:textSize="@dimen/dimen_18sp"
+                    android:text="@string/search_in_distance"
+                    />
+            <TextView
+                    android:id="@+id/distance"
+                    android:layout_toRightOf="@id/distance_desc"
+                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dimen_80dp"
+                    android:textColor="@android:color/white"
+                    android:layout_marginLeft="@dimen/dimen_10dp"
+                    android:textSize="@dimen/dimen_18sp"
+                    />
+            <SeekBar
+                    android:id="@+id/distance_meter"
+                    android:layout_below="@id/distance"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/dimen_10dp"
+                    android:layout_centerVertical="true"
+                    />
+        </RelativeLayout>
+
 
         <Button
-                android:id="@+id/select_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/choose_category"
-                android:onClick="onSelectCategoryClick"
+                android:layout_below="@id/search_distance"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50dp"
+                android:text="@string/search"
                 style="@android:style/Widget.Holo.Button"
-                />
-        <Button
-                android:id="@+id/select_restaurant"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/choose_restaurant"
+                android:textSize="@dimen/dimen_20sp"
                 android:onClick="onSelectRestaurantClick"
-                style="@android:style/Widget.Holo.Button"
+                android:layout_marginTop="@dimen/dimen_20dp"
                 />
-    </TableLayout>
+    </RelativeLayout>
 
-    <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/order"
-            style="@android:style/Widget.Holo.Button"
-            android:textSize="@dimen/dimen_20sp"
-            />
-</LinearLayout>
+ </LinearLayout>

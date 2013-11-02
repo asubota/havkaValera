@@ -1,4 +1,4 @@
-package com.example.havkavalera.specify_dialog;
+package com.havkavalera.app.specify_dialog;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,23 +7,22 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
-import com.example.havkavalera.R;
-import com.example.havkavalera.RestaurantsGetter;
-import com.example.havkavalera.UserLocationListener;
-import com.example.havkavalera.adapters.RestaurantSelectAdapter;
-import com.example.havkavalera.mock.MockRestaurantsList;
-import com.example.havkavalera.model.Restaurant;
+import android.widget.*;
+import com.havkavalera.app.R;
+import com.havkavalera.app.RestaurantsGetter;
+import com.havkavalera.app.adapters.RestaurantSelectAdapter;
+import com.havkavalera.app.model.Restaurant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectRestaurantActivity extends Activity implements RestaurantsGetter.RestaurantListener {
 
     public static final int REQUEST_CODE = 1002;
 
-    private List<Restaurant> mRestaurants;
+    public static final String SEARCH_DISTANCE_KEY = "com.havkavalera.app.SEARCH_DISTANCE_KEY";
+
+    private List<Restaurant> mRestaurants = new ArrayList<Restaurant>();
     private RestaurantSelectAdapter rsa;
 
     @Override
@@ -32,7 +31,6 @@ public class SelectRestaurantActivity extends Activity implements RestaurantsGet
         setContentView(R.layout.select_list_layout);
 
         ListView listView = (ListView) findViewById(R.id.selected_list);
-        mRestaurants = MockRestaurantsList.getRestaurants();
         rsa = new RestaurantSelectAdapter(mRestaurants);
         listView.setAdapter(rsa);
 
@@ -49,12 +47,18 @@ public class SelectRestaurantActivity extends Activity implements RestaurantsGet
             }
         });
 
-        RestaurantsGetter restaurantsGetter = new RestaurantsGetter(this);
+        int searchDistance = getIntent().getIntExtra(SEARCH_DISTANCE_KEY, 1000);
+
+        final RestaurantsGetter restaurantsGetter = new RestaurantsGetter(this);
         restaurantsGetter.setRestaurantListener(this);
+        setRestaurantRequest(restaurantsGetter, searchDistance);
+    }
+
+    private void setRestaurantRequest(RestaurantsGetter restaurantsGetter, int radius) {
         Location location = ((LocationManager) getSystemService(LOCATION_SERVICE)).
                 getLastKnownLocation(LocationManager.GPS_PROVIDER);
         restaurantsGetter.requestRestaurantsByPosition(location.getLongitude(),
-                location.getLatitude(),1000);
+                location.getLatitude(), radius);
     }
 
     @Override

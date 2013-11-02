@@ -1,4 +1,4 @@
-package com.example.havkavalera.adapters;
+package com.havkavalera.app.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
-import com.example.havkavalera.R;
-import com.example.havkavalera.VolleySingleton;
-import com.example.havkavalera.model.Restaurant;
+import com.havkavalera.app.R;
+import com.havkavalera.app.VolleySingleton;
+import com.havkavalera.app.model.Restaurant;
 
 import java.util.List;
 

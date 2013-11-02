@@ -1,4 +1,4 @@
-package com.example.havkavalera;
+package com.havkavalera.app;
 
 import android.location.Location;
 import android.location.LocationListener;

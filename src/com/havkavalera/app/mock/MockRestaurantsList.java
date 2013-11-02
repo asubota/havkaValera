@@ -1,6 +1,6 @@
-package com.example.havkavalera.mock;
+package com.havkavalera.app.mock;
 
-import com.example.havkavalera.model.Restaurant;
+import com.havkavalera.app.model.Restaurant;
 
 import java.util.ArrayList;
 import java.util.List;

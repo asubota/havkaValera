@@ -32,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:textColor="@android:color/white"
-                android:text="asdljghsdg"
                 android:textSize="@dimen/dimen_20sp"
                 />
 
@@ -53,16 +52,16 @@
                 />
     </LinearLayout>
 
-    <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            >
+    <!--<RelativeLayout-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_width="match_parent"-->
+            <!-->-->
 
-        <ru.yandex.yandexmapkit.MapView
-                android:id="@+id/map"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:apiKey="1234567890"
-                />
-    </RelativeLayout>
+        <!--<ru.yandex.yandexmapkit.MapView-->
+                <!--android:id="@+id/map"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:apiKey="1234567890"-->
+                <!--/>-->
+    <!--</RelativeLayout>-->
 </LinearLayout>

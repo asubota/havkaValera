@@ -1,4 +1,4 @@
-package com.example.havkavalera;
+package com.havkavalera.app;
 
 public class ConnectionInfo {
     public final static String HOST = "havka.sona-studio.com";

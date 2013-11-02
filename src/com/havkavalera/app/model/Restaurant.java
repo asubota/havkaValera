@@ -1,8 +1,8 @@
-package com.example.havkavalera.model;
+package com.havkavalera.app.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.example.havkavalera.ConnectionInfo;
+import com.havkavalera.app.ConnectionInfo;
 
 public class Restaurant implements Parcelable {
 
@@ -16,7 +16,7 @@ public class Restaurant implements Parcelable {
     private double mLat;
     private double mLng;
 
-    private String[] categories;
+    private String[] categories = new String[0];
 
     public Restaurant(String id, String name, String imageUrl) {
         this.mId = id;

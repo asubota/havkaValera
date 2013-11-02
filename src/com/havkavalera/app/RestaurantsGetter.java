@@ -1,4 +1,4 @@
-package com.example.havkavalera;
+package com.havkavalera.app;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,7 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.havkavalera.model.Restaurant;
+import com.havkavalera.app.model.Restaurant;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
