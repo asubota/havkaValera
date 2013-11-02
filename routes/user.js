@@ -1,8 +1,16 @@
 
-/*
- * GET users listing.
- */
+exports.getUserData = function( req, res ){
+    if( req.user ){
+        res.send( req.user );
+    }else{
+        res.send( {} );
+    }
+};
 
-exports.list = function(req, res){
-  res.send("respond with a resource");
+exports.getSession = function( req, res ){
+    res.send( req.session );
+};
+
+exports.showAuthError = function( req, res ){
+    res.send( { error : "auth" } );
 };
