@@ -61,13 +61,8 @@ passport.use(new FacebookStrategy({
         callbackURL    : "http://havka.sona-studio.com/auth/facebook/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-        process.nextTick(function () {
-
-            // To keep the example simple, the user's Facebook profile is returned to
-            // represent the logged-in user.  In a typical application, you would want
-            // to associate the Facebook account with a user record in your database,
-            // and return that user instead.
-            return done(null, profile);
+        User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+          return done(err, user);
         });
     }
 ));
@@ -84,7 +79,17 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRe
     }
 );
 
+app.get('/ss', function( req, res ){
+    console.log( req.user );
+    console.log( req.session );
+    res.send( req.user );
+});
 
+app.get('/sets', function( req, res ){
+    console.log( req.user );
+    console.log( req.session );
+    res.send( req.user );
+});
 
 /////////////////////////
 ///////////////////
