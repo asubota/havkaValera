@@ -5,24 +5,54 @@ require 'open-uri'
 
 restaurants = []
 
+def get_menu(hash)
+  meals = []
+
+  restaurant_page = Nokogiri::HTML(open("http://hrum.com.ua/menu/#{hash}")).css('.menu_list').each do |rest|
+    meal_category = rest.css('.menu_btn').text.strip
+
+    category_meal = rest.css('.menu_togle li').each do |meal|
+      meal_name = meal.css('.about_box .title a').text.strip
+      meal_text = meal.css('.about_box .text').text.strip
+      meal_price= meal.css('.price_box .price').text
+      key       = meal['id']
+      image     = '' #meal.css('.pic .big_pic')[0]['data']
+
+      m = {
+        key: key,
+        name: meal_name,
+        image: image,
+        description: meal_text,
+        price: meal_price,
+        category: meal_category
+      }
+
+      meals.push m
+    end
+  end
+
+  return meals
+end
+
 doc = Nokogiri::HTML(open('http://hrum.com.ua/restaurants/all/kiev')).css('.item_box').each do |item|
-  
+
   title = item.css('.title').text.strip
   key = item.css('.hd_inner a.restaurant_title')[0]['href'].sub('/menu/','')
   logo_src = item.css('.item_logo img')[0]['src']
   logo_alt = item.css('.item_logo img')[0]['alt']
-  
+
   geo_lng = item.css('.address .gmaper')[0]['data-lng'].to_f
   geo_lat = item.css('.address .gmaper')[0]['data-lat'].to_f
   geo_title=item.css('.address .gmaper')[0]['data-title']
 
   note = item.css('.note').text.strip
-  
+
   min_cost      = item.css('.info_box li')[1].css('span').text
   delivery_time = item.css('.info_box li')[5].css('span').text.sub(/[^\d]+/, '')
   delivery      = item.css('.info_box li')[3].css('span').text.split
-  category      = item.css('.info_box li')[2].css('span').text
+  category      = item.css('.info_box li')[2].css('span').text.split(/[^\w]/)
 
+  menu = get_menu key
 
 =begin
   image_path = "../public/media/logo/" + logo_src.sub('/images/', '')  + '.jpg' 
@@ -45,15 +75,16 @@ doc = Nokogiri::HTML(open('http://hrum.com.ua/restaurants/all/kiev')).css('.item
       },
       info: {
         note: note,
-        category: category
       },
+      category: category,
       delivery: {
         min_cost: min_cost.sub('грн.','').strip,
         time: delivery_time,
         cost: delivery[0],
         currency: delivery[1].sub('грн.','UAH').strip
-      }
-    
+      },
+      menu: menu
+
   }
 
   restaurants.push r
