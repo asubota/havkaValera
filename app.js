@@ -48,8 +48,9 @@ passport.use(new FacebookStrategy({
         callbackURL    : "http://havka.sona-studio.com/auth/facebook/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-        console.log( profile );
-        return done( profile );
+        process.nextTick(function () {
+            return done(null, profile);
+        });
     }
 ));
 
@@ -59,7 +60,9 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRe
     function(req, res) {
         // Successful authentication, redirect home.
         console.log( req.session );
-        res.redirect('/');
+        console.log( req.user );
+        
+        res.send( "hmm" );
     }
 );
 
@@ -100,7 +103,27 @@ app.get('/restaurant/:lng/:lat/:r'   , restaurants.getRestaurantByLocation );
  * END
  */
 
+app.get('/reverse_geocode/:lat/:lng', function(req, response) {
+	var url = "/maps/api/geocode/json?latlng="+req.params['lat']+","+req.params['lng']+"&sensor=false&language=ru", output = '';
+	var options = {
+  	hostname: 'maps.googleapis.com',
+  	port: 80,
+  	path: url,
+  	method: 'POST'
+	};
+	var req = http.request(options, function(res) {
+    res.setEncoding('utf8');
+    res.on('data', function (chunk) {
+      output += chunk;
+    });
 
+		res.on('end', function() {
+    	response.send(output);
+    });
+  });
+
+	req.end();
+});
 
 
 
