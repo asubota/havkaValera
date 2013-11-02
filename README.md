@@ -1,4 +1,2 @@
-havkaValera
-===========
-
-Cogniance hackaton food delivery project
+# havkaValera
+### a Sails application
