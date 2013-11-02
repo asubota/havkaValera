@@ -23,6 +23,8 @@ def get_menu(hash)
         parent    = meal_hash[0]
         hash      = meal_hash[1]
       
+=begin
+
         image_path_orig  = meal.css('.pic .big_pic img')[0]['data-original']
         image_path_local = "../public/media/#{parent}/food/" + image_path_orig.sub('/images/', '')  + '.jpg' 
         image = image_path_local.sub('../public', '')
@@ -35,7 +37,8 @@ def get_menu(hash)
         open(image_path_local, 'wb') do |file|
           file << open("http://hrum.com.ua#{image_path_orig}").read
         end
-      
+=end
+
         m = {
           key: key,
           hash: hash,
