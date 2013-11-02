@@ -1,2 +1,0 @@
-# havkaValera
-### a Sails application
