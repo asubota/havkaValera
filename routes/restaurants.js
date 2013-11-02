@@ -18,7 +18,12 @@ exports.list = function(req, res){
                 if(err){
                     res.send( [] );
                 }else{
-                    res.send( results );
+                    var resp = [];
+                    for( var i = 0; i < results.length; i++ ){
+                        delete results[i].menu;
+                        resp.push(results[i]);
+                    }
+                    res.send( resp );
                 }
                 db.close();
             });
@@ -83,6 +88,31 @@ exports.getRestaurantById = function(req, res){
     });
 };
 
+exports.getRestaurantMenu = function(req, res){
+    MongoClient.connect( mongoCreds , function(err, db) {
+        if(err){
+            console.log( "DB connection error: " + err );
+            res.send( [] );
+            db.close();
+        }else{
+            var restaurantsCollection = db.collection('restaurants');
+            restaurantsCollection.find( { _id : new ObjectID( req.params.id ) } ).toArray(function(err, results) {
+                if(err){
+                    console.log( "Collection find error: " + err );
+                    res.send( {} );
+                }else{
+                    if( results[ 0 ] ){
+                        res.send( results[ 0 ].menu );
+                    }else{
+                        res.send( {} );
+                    }
+                }
+                db.close();
+            });
+        }
+    });
+};
+
 /*
  * GET Restaurant by location
  */
@@ -111,7 +141,12 @@ exports.getRestaurantByLocation = function(req, res){
                 if(err){
                     res.send( [] );
                 }else{
-                    res.send( results );
+                    var resp = [];
+                    for( var i = 0; i < results.length; i++ ){
+                        delete results[i].menu;
+                        resp.push(results[i]);
+                    }
+                    res.send( resp );
                 }
                 db.close();
             });
