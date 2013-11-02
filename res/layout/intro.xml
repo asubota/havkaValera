@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/welcome_to_valera"
+            android:textSize="@dimen/dimen_25sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            />
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/food_order"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/welcome_icon"
+            />
+
+    <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:layout_marginTop="@dimen/dimen_50dp"
+            android:layout_margin="@dimen/dimen_10dp"
+            >
+
+        <Button
+                android:id="@+id/select_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_category"
+                android:onClick="onSelectCategoryClick"
+                style="@android:style/Widget.Holo.Button"
+                />
+        <Button
+                android:id="@+id/select_restaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_restaurant"
+                android:visibility="gone"
+                android:onClick="onSelectRestaurantClick"
+                style="@android:style/Widget.Holo.Button"
+                />
+    </TableLayout>
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/order"
+            style="@android:style/Widget.Holo.Button"
+            android:textSize="@dimen/dimen_20sp"
+            />
+</LinearLayout>

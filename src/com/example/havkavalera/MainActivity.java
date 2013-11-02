@@ -15,37 +15,19 @@ import org.json.JSONObject;
 
 public class MainActivity extends Activity {
 
-    private TextView txtDisplay;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.intro);
 
-        txtDisplay = (TextView) findViewById(R.id.txt_display);
+//        RequestQueue queue = Volley.newRequestQueue(this);
+//        String url = "https://www.googleapis.com/books/v1/volumes?q=Harry&maxResults=1&projection=lite";
+    }
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://www.googleapis.com/books/v1/volumes?q=Harry&maxResults=1&projection=lite";
+    public void onSelectCategoryClick(View view) {
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+    }
 
-            @Override
-            public void onResponse(JSONObject response) {
-                txtDisplay.setText("Response => " + response.toString());
-                findViewById(R.id.progressBar1).setVisibility(View.GONE);
-                Toast.makeText(MainActivity.this, "everything ok", Toast.LENGTH_SHORT).show();
-            }
-        }, new Response.ErrorListener() {
-
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, "everything failed " + error.networkResponse.statusCode, Toast.LENGTH_SHORT).show();
-                findViewById(R.id.progressBar1).setVisibility(View.GONE);
-            }
-        });
-
-        queue.add(jsObjRequest);
-
+    public void onSelectRestaurantClick(View view) {
     }
 }
