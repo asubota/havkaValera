@@ -16,33 +16,40 @@
   </head>
   <body>
     <section class="col-md-12">
-      <div class="navbar">
-        <div class="navbar-collapse collapse navbar-collapse-01">
-          <ul class="nav navbar-nav navbar-left">
-            <li class="active">
-              <a href="/">
-                <img src="images/icons/svg/compas.svg" alt="Compas">
-                <span class="menu-text"> Где я?  </span>
-              </a>
-            </li>
-
-            <li >
-              <a href="/">
-                <img src="images/icons/svg/clipboard.svg" alt="Clipboard">
-                <span class="menu-text"> Хочу  </span>
-              </a>
-            </li>
-
-            <li >
-              <a href="/">
-                <img src="images/icons/svg/paper-bag.svg" alt="Pocket">
-                <span class="menu-text"> Достака  </span>
-              </a>
-            </li>
-            
-            <li id="logo"></li>
-          </ul>
-        </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a href="#">
+              <img src="images/icons/svg/compas.svg" alt="Compas" style="width:40px">
+              <span class="menu-text">Где я?</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <img src="images/icons/svg/paper-bag.svg" alt="Pocket" style="width:40px">
+              <span class="menu-text"> Доставка  </span>
+            </a>
+          </li>
+      
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="images/icons/svg/clipboard.svg" alt="Pocket" style="width:40px">
+              <span class="menu-text"> Хочу  </span>
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Суши</a></li>
+              <li><a href="#">Украинская кухня</a></li>
+              <li><a href="#">Чеченская кухня</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Салатики</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Макдональдс</a></li>
+            </ul>
+          </li>
+      
+          <li id="logo"></li>
+        </ul>
       </div>
     </section>
 
@@ -51,7 +58,7 @@
     <script src="js/jquery-1.8.3.min.js"></script>
     <!--<script src="js/jquery-ui-1.10.3.custom.min.js"></script>-->
     <!--<script src="js/jquery.ui.touch-punch.min.js"></script>-->
-    <!--<script src="js/bootstrap.min.js"></script>-->
+    <script src="js/bootstrap.min.js"></script>
     <!--<script src="js/bootstrap-select.js"></script>-->
     <!--<script src="js/bootstrap-switch.js"></script>-->
     <!--<script src="js/flatui-checkbox.js"></script>-->

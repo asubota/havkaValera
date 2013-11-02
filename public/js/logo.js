@@ -6,7 +6,7 @@ var LogoBox = React.createClass({
   render: function() {
     return (
         <h4>
-            Havka$Валера - доставляет
+            Havka$$$Valera - доставляет
         </h4>
     );
   }
