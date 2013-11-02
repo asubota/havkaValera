@@ -25,8 +25,13 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use(express.cookieParser('your secret here'));
-app.use(express.session());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -39,6 +44,14 @@ if ('development' == app.get('env')) {
 /*********
 *////////
 
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+    done(null, obj);
+});
+
 var FACEBOOK_APP_ID = '524769977614277';
 var FACEBOOK_APP_SECRET = '9a67a7e42f5cd2c9217ff84c5eaf43b3';
 
@@ -49,6 +62,11 @@ passport.use(new FacebookStrategy({
     },
     function(accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
+
+            // To keep the example simple, the user's Facebook profile is returned to
+            // represent the logged-in user.  In a typical application, you would want
+            // to associate the Facebook account with a user record in your database,
+            // and return that user instead.
             return done(null, profile);
         });
     }
@@ -65,6 +83,9 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRe
         res.send( "hmm" );
     }
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 /////////////////////////
 ///////////////////
