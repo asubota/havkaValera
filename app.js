@@ -6,6 +6,7 @@
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
+var town = require('./routes/town');
 var http = require('http');
 var path = require('path');
 
@@ -39,6 +40,18 @@ app.get('/', routes.index);
 app.get('/test', routes.test);
 app.get('/users', user.list);
 
+
+
+/*
+ * Towns routes
+ * BEGIN
+ */
+app.get('/town', town.list);
+app.get('/town/:id', town.getTownById);
+/*
+ * Towns routes
+ * END
+ */
 
 
 
