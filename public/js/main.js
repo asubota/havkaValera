@@ -24,33 +24,39 @@ function init(){
 	
 	$(window).change(function() { 
 		resizeMap();
-	})
+	});
+	
+	$('.where_am_i').click(function() {
+		show_where_am_i(currentPosition);
+	});
 }
 
 function handle_error(err) {
   if (err.code == 1) {
     alert('Похоже вы отказались от геолокации (мы и так вас найдем!)');
   }
-}
+};
 
-function show_map(position) {
-	currentPosition = position;
-	
-  var lat = position.coords.latitude;
-  var long = position.coords.longitude;
-  // let's show a map or do something interesting!
-
-  myMap.panTo([lat, long], {
-		duration: 2000,
-		callback: function () {
-     showObjectsNear(position);
-		}
-	});
+function show_where_am_i(pos) {
+	var lat = pos.coords.latitude;
+  var long = pos.coords.longitude;
 
 	var myPlacemark = new ymaps.Placemark([lat, long]);
 	placemarks.add(myPlacemark);
 	myMap.geoObjects.add(placemarks);
-}
+
+  myMap.panTo([lat, long], {
+		duration: 1000,
+		callback: function () {
+     showObjectsNear(pos);
+		}
+	});
+};
+
+function show_map(position) {
+	currentPosition = position;
+	show_where_am_i(currentPosition);
+};
 
 function remove_old_placemarks() {
 	// remove all old placemarks
@@ -88,27 +94,16 @@ function show_venues_on_map(venues) {
 function showObjectsNear(position) {
 	var lat = position.coords.latitude,
   		lng = position.coords.longitude;
-
-	var stub = [{
-		title: 'Сказка Востока',
-		lat: 50.324586,
-		lng: 30.563057999999955,
-		description: 'Столичное шоссе 35'
-	}];
 	
-	//jQuery.get('/restaurants/'+lng+'/'+lat, function(resp) {
+	jQuery.get('/restaurants/'+lng+'/'+lat, function(resp) {
 		remove_old_placemarks();
-		show_venues_on_map(stub);
-	//});
+		show_venues_on_map(resp);
+	});
 };
 
 function showObjectsNearByCategory(category) {
 	jQuery.get('/restaurants/'+category, function(resp) {
 		remove_old_placemarks();
-
-		//jQuery.each(resp.objects, function(venue) {
-			remove_old_placemarks();
-		  show_venues_on_map(stub);
-		//});
+		show_venues_on_map(resp);
 	});
 }
