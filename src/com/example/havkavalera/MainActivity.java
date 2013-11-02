@@ -1,7 +1,10 @@
 package com.example.havkavalera;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +25,11 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro);
+
+        LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener mlocListener = new UserLocationListener();
+        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
     }
 
     public void onSelectCategoryClick(View view) {

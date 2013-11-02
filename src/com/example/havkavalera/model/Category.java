@@ -44,4 +44,18 @@ public class Category implements Parcelable {
 
     };
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        return !(mName != null ? !mName.equals(category.mName) : category.mName != null);
+    }
+
+    @Override
+    public int hashCode() {
+        return mName != null ? mName.hashCode() : 0;
+    }
 }

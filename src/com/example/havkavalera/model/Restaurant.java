@@ -2,10 +2,11 @@ package com.example.havkavalera.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.example.havkavalera.ConnectionInfo;
 
 public class Restaurant implements Parcelable {
 
-    public final long mId;
+    public final String mId;
     public final String mName;
     public final String mImageUrl;
 
@@ -15,14 +16,16 @@ public class Restaurant implements Parcelable {
     private double mLat;
     private double mLng;
 
-    public Restaurant(long id, String name, String imageUrl) {
+    private String[] categories;
+
+    public Restaurant(String id, String name, String imageUrl) {
         this.mId = id;
         this.mName = name;
-        this.mImageUrl = imageUrl;
+        this.mImageUrl = ConnectionInfo.getHttpHostAddress() + imageUrl;
     }
 
     public Restaurant(Parcel source) {
-        this.mId = source.readLong();
+        this.mId = source.readString();
         this.mName = source.readString();
         this.mImageUrl = source.readString();
 
@@ -30,6 +33,8 @@ public class Restaurant implements Parcelable {
         this.mAddress = source.readString();
         this.mLat = source.readDouble();
         this.mLng = source.readDouble();
+
+        source.readStringArray(categories);
     }
 
     public void setLocation(String address, double lat, double lng) {
@@ -54,6 +59,14 @@ public class Restaurant implements Parcelable {
         return mDescription;
     }
 
+    public String[] getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String[] categories) {
+        this.categories = categories;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -61,13 +74,14 @@ public class Restaurant implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(mId);
+        dest.writeString(mId);
         dest.writeString(mName);
         dest.writeString(mImageUrl);
         dest.writeString(mDescription);
         dest.writeString(mAddress);
         dest.writeDouble(mLat);
         dest.writeDouble(mLng);
+        dest.writeStringArray(categories);
     }
 
     public static final Parcelable.Creator<Restaurant> CREATOR = new Parcelable.Creator<Restaurant>() {
@@ -79,4 +93,19 @@ public class Restaurant implements Parcelable {
             return new Restaurant[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Restaurant that = (Restaurant) o;
+
+        return !(mId != null ? !mId.equals(that.mId) : that.mId != null);
+    }
+
+    @Override
+    public int hashCode() {
+        return mId != null ? mId.hashCode() : 0;
+    }
 }

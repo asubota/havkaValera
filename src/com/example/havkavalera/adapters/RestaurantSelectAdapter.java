@@ -33,7 +33,7 @@ public class RestaurantSelectAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return mRestaurants.get(position).mId;
+        return position;
     }
 
     @Override
@@ -46,7 +46,9 @@ public class RestaurantSelectAdapter extends BaseAdapter {
         TextView restaurantAddress = (TextView) view.findViewById(R.id.address);
 
         Restaurant restaurant = getItem(position);
-        restaurantImageView.setImageUrl(restaurant.mImageUrl, VolleySingleton.getInstance(context).getImageLoader());
+        if (restaurant.mImageUrl != null) {
+            restaurantImageView.setImageUrl(restaurant.mImageUrl, VolleySingleton.getInstance(context).getImageLoader());
+        }
         restaurantName.setText(restaurant.mName);
         restaurantAddress.setText(restaurant.getAddress());
 
