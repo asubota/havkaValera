@@ -5,4 +5,6 @@
     <dimen name="dimen_50dp">50dp</dimen>
     <dimen name="dimen_20sp">20sp</dimen>
     <dimen name="dimen_10dp">10dp</dimen>
+    <dimen name="dimen_18sp">18sp</dimen>
+    <dimen name="dimen_40dp">40dp</dimen>
 </resources>

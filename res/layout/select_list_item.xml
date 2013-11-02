@@ -4,4 +4,9 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <com.markupartist.android.widget.PullToRefreshListView
+            android:id="@+id/categories"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            />
 </LinearLayout>
