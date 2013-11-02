@@ -34,7 +34,7 @@ doc = Nokogiri::HTML(open('http://hrum.com.ua/restaurants/all/kiev')).css('.item
       lat: geo_lat,
       lng: geo_lng,
       logo: {
-        src: logo_src,
+        src: logo_src.sub('/images.','/public/media/logo'),
         alt: logo_alt
       },
       address: {
@@ -59,8 +59,6 @@ end
 
 rests = restaurants.map(&:to_json).join(",\n")
 
-rests = "var restaurants = [#{rests}];
-
-exports.restaurants = restaurants;"
+rests = "[#{rests}]"
 
 File.open('restaurants.json', 'w') { |file| file.write rests }
