@@ -2,8 +2,12 @@ ymaps.ready(init);
 
 var myMap, currentPosition, placemarks;
 
+function resizeMap() {
+	jQuery('#map').css({width: window.innerWidth, height: (window.innerHeight - $('section.col-md-12').height()) });
+}
+
 function init(){ 
-	jQuery('#map').css({width: window.innerWidth, height: window.innerHeight});
+	resizeMap();
 	
 	myMap = new ymaps.Map ("map", {
   	center: [50.450949,30.522622],
@@ -16,11 +20,17 @@ function init(){
 	);
 
 	placemarks = new ymaps.GeoObjectCollection();
-	navigator.geolocation.getCurrentPosition(show_map);
+	navigator.geolocation.getCurrentPosition(show_map, handle_error);
 	
-	$(window).change(function() {
-		jQuery('#map').css({width: window.innerWidth, height: window.innerHeight});
+	$(window).change(function() { 
+		resizeMap();
 	})
+}
+
+function handle_error(err) {
+  if (err.code == 1) {
+    alert('Похоже вы отказались от геолокации (мы и так вас найдем!)');
+  }
 }
 
 function show_map(position) {
@@ -54,7 +64,13 @@ function remove_old_placemarks() {
 function show_venues_on_map(venues) {
 	// Creating a collection of geo objects.
 	//var placemarks = new ymaps.GeoObjectCollection();
-	var current_pos = new ymaps.Placemark([currentPosition.coords.latitude, currentPosition.coords.longitude]);
+	var current_pos = new ymaps.Placemark([currentPosition.coords.latitude, currentPosition.coords.longitude], { 
+		content: "Йя", 					
+		balloonContent: "Йа"
+	}, {
+		  iconImageHref: '/current_pos_icon.png',
+      iconImageSize: [37, 37]
+		});
 
 	placemarks.add(current_pos);
 	
