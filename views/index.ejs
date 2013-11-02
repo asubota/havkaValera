@@ -5,8 +5,9 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="css/flat-ui.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/flat-ui.css" rel="stylesheet">
     
     <script src="http://fb.me/react-0.5.1.js"></script>
     <script src="http://fb.me/JSXTransformer-0.5.1.js"></script>
@@ -32,21 +33,23 @@
             </a>
           </li>
       
-          <li class="dropdown">
+          <li id="category-menu" >
+            <div class="dropdown" >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="images/icons/svg/clipboard.svg" alt="Pocket" style="width:40px">
               <span class="menu-text"> Хочу  </span>
               <b class="caret"></b>
             </a>
-            <ul class="dropdown-menu cousins">
-              <li><a href="#" data-category-id="1">Суши</a></li>
-              <li><a href="#" data-category-id="2">Украинская кухня</a></li>
-              <li><a href="#" data-category-id="3">Чеченская кухня</a></li>
-              <li class="divider"></li>
-              <li><a href="#" data-category-id="4">Салатики</a></li>
-              <li class="divider"></li>
-              <li><a href="#" data-category-id="5">Макдональдс</a></li>
-            </ul>
+              <ul class="dropdown-menu cousins" >
+                <li><a href="#" data-category-id="1">Суши</a></li>
+                <li><a href="#" data-category-id="2">Украинская кухня</a></li>
+                <li><a href="#" data-category-id="3">Чеченская кухня</a></li>
+                <li class="divider"></li>
+                <li><a href="#" data-category-id="4">Салатики</a></li>
+                <li class="divider"></li>
+                <li><a href="#" data-category-id="5">Макдональдс</a></li>
+              </ul>
+            </div>
           </li>
       
           <li id="logo">
