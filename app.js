@@ -48,8 +48,9 @@ passport.use(new FacebookStrategy({
         callbackURL    : "http://havka.sona-studio.com/auth/facebook/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-        console.log( profile );
-        return done( profile );
+        process.nextTick(function () {
+            return done(null, profile);
+        });
     }
 ));
 
@@ -59,7 +60,9 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRe
     function(req, res) {
         // Successful authentication, redirect home.
         console.log( req.session );
-        res.redirect('/');
+        console.log( req.user );
+        
+        res.send( "hmm" );
     }
 );
 
