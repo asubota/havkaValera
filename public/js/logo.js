@@ -5,9 +5,9 @@
 var LogoBox = React.createClass({
   render: function() {
     return (
-        <h1><img src="/logo.jpg" />
-            Валера - доставляет
-        </h1>
+        <h4>
+            Havka$Валера - доставляет
+        </h4>
     );
   }
 });
