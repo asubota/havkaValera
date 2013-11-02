@@ -7,7 +7,7 @@ import java.util.List;
 
 public class MockCategoryList {
 
-    public static List<Category> getCategory() {
+    public static List<Category> getCategories() {
         List<Category> categories = new ArrayList<Category>();
         categories.add(new Category(0l, "Name0", null));
         categories.add(new Category(1l, "Name1", null));
