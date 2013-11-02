@@ -19,6 +19,11 @@ function init(){
     new ymaps.control.ZoomControl()
 	);
 
+	myMap.events.add('click', function (e) {
+		currentPosition = {coords: {latitude: e.get('coordPosition')[0], longitude: e.get('coordPosition')[1]}};
+		show_where_am_i(currentPosition);
+	});
+
 	placemarks = new ymaps.GeoObjectCollection();
 	navigator.geolocation.getCurrentPosition(show_map, handle_error);
 	
@@ -27,7 +32,7 @@ function init(){
 	});
 	
 	$('.where_am_i').click(function() {
-		show_where_am_i(currentPosition);
+		navigator.geolocation.getCurrentPosition(show_where_am_i, handle_error);
 	});
 	
 	$('.cousins li a').click(function(){
@@ -43,6 +48,7 @@ function handle_error(err) {
 };
 
 function show_where_am_i(pos) {
+	currentPosition = pos;
 	var lat = pos.coords.latitude;
   var long = pos.coords.longitude;
 
@@ -61,14 +67,11 @@ function show_where_am_i(pos) {
 function show_map(position) {
 	currentPosition = position;
 	show_where_am_i(currentPosition);
+	showObjectsNear(position)
 };
 
 function remove_old_placemarks() {
-	// remove all old placemarks
-	jQuery.each(placemarks, function(placemark) {
-		myMap.geoObjects.remove(placemark);
-	});
-	
+	myMap.geoObjects.remove(placemarks);
 	placemarks = new ymaps.GeoObjectCollection();
 }
 
@@ -86,28 +89,30 @@ function show_venues_on_map(venues) {
 	placemarks.add(current_pos);
 	
   jQuery.each(venues, function() {	
-	  var placemark = new ymaps.Placemark([this.lat, this.lng], { content: this.title, balloonContent: this.title+'\n'+this.description });
+	  var placemark = new ymaps.Placemark([this.lat, this.lng], { content: this.title, balloonContent: this.title+'<br/><small>'+this.address.street+'</small>' });
 	  placemarks.add(placemark);
 	});
 
 	// Adding the collection to the map.
 	myMap.geoObjects.add(placemarks);
-	// Setting the map center and zoom so that the entire collection is included.
-	myMap.setBounds(placemarks.getBounds());	
+	if(placemarks.length > 1) {
+	  // Setting the map center and zoom so that the entire collection is included.
+	  myMap.setBounds(placemarks.getBounds());
+	}
 };
  
 function showObjectsNear(position) {
 	var lat = position.coords.latitude,
   		lng = position.coords.longitude;
 	
-	jQuery.get('/restaurants/'+lng+'/'+lat, function(resp) {
+	jQuery.get('/restaurant/'+lng+'/'+lat+'/2000', function(resp) {
 		remove_old_placemarks();
 		show_venues_on_map(resp);
 	});
 };
 
 function showObjectsNearByCategory(category_id) {
-	jQuery.get('/restaurants/'+category_id, function(resp) {
+	jQuery.get('/restaurant/'+category_id, function(resp) {
 		remove_old_placemarks();
 		show_venues_on_map(resp);
 	});
