@@ -112,3 +112,17 @@ function showObjectsNearByCategory(category_id) {
 		show_venues_on_map(resp);
 	});
 }
+
+function reverse_geocode(position) {
+	if(!position) {
+		var position = currentPosition;
+	}
+  var lat = position.coords.latitude;
+  var lng = position.coords.longitude;
+
+  // 'http://maps.google.com/maps/geo?q='+lat+','+lon+'&output=jsonp&sensor=false&callback=parse_jsonp' v2
+  // http://maps.googleapis.com/maps/api/geocode/json?latlng=49.8295075,24.0086034&sensor=false v3
+  jQuery.getJSON('/reverse_geocode/'+lat+'/'+lng, function(result){
+	  return result.results[0].formatted_address;
+  });
+}
