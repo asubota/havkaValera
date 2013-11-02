@@ -2,6 +2,7 @@ package com.example.havkavalera.specify_dialog;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ListView;
 import com.example.havkavalera.R;
 import com.example.havkavalera.adapters.RestaurantSelectAdapter;
@@ -25,5 +26,16 @@ public class SelectRestaurantActivity extends Activity {
         listView.setAdapter(new RestaurantSelectAdapter(restaurants));
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
