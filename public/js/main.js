@@ -2,10 +2,13 @@ ymaps.ready(init);
 
 var myMap, currentPosition, placemarks;
 
-function init(){     
+function init(){ 
+	jQuery('#map').css({width: window.innerWidth, height: window.innerHeight});
+	
 	myMap = new ymaps.Map ("map", {
   	center: [50.450949,30.522622],
     zoom: 15,
+		autoFitToViewport: 'always'
   });
 	
 	myMap.controls.add(
@@ -14,6 +17,10 @@ function init(){
 
 	placemarks = new ymaps.GeoObjectCollection();
 	navigator.geolocation.getCurrentPosition(show_map);
+	
+	$(window).change(function() {
+		jQuery('#map').css({width: window.innerWidth, height: window.innerHeight});
+	})
 }
 
 function show_map(position) {
