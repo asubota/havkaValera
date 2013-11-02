@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:baselineAligned="false">
+
+        <RelativeLayout
+                android:layout_height="@dimen/dimen_100dp"
+                android:layout_width="@dimen/dimen_130dp"
+                android:background="@android:color/white"
+                android:layout_weight="1"
+                >
+
+            <com.android.volley.toolbox.NetworkImageView
+                    android:id="@+id/menu_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+        </RelativeLayout>
+
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/dimen_10dp"
+                android:layout_weight="1"
+
+                >
+
+            <TextView
+                    android:id="@+id/menu_name"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="asdfasdf"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/dimen_20sp"
+                    android:layout_marginBottom="@dimen/dimen_5dp"
+                    />
+
+            <TextView
+                    android:id="@+id/menu_description"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/dimen_18sp"
+                    android:layout_marginBottom="@dimen/dimen_5dp"
+                    />
+
+            <TextView
+                    android:id="@+id/menu_price"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="asdfasdf"
+                    android:textColor="@android:color/white"
+                    android:layout_marginBottom="@dimen/dimen_5dp"
+                    android:textSize="@dimen/dimen_18sp"
+                    />
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_40dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                >
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:layout_marginBottom="@dimen/dimen_5dp"
+                    android:textSize="@dimen/dimen_18sp"
+                    android:text="@string/ordered"
+                    />
+
+            <TextView
+                    android:id="@+id/items_ordered"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:layout_marginBottom="@dimen/dimen_5dp"
+                    android:textSize="@dimen/dimen_18sp"
+                    />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            >
+        <Button
+                android:id="@+id/order"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="@string/order"
+                />
+        <Button
+                android:id="@+id/cancel_order"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="@string/cancel_order"
+                />
+        <Button
+                android:id="@+id/cancel_all"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="@string/cancel_all_orders"
+                />
+    </LinearLayout>
+</LinearLayout>

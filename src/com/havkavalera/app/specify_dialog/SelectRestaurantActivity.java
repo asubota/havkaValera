@@ -2,6 +2,7 @@ package com.havkavalera.app.specify_dialog;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -9,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.havkavalera.app.R;
-import com.havkavalera.app.RestaurantsGetter;
+import com.havkavalera.app.info_loaders.RestaurantsGetter;
 import com.havkavalera.app.adapters.RestaurantSelectAdapter;
 import com.havkavalera.app.model.Restaurant;
 
@@ -56,9 +57,11 @@ public class SelectRestaurantActivity extends Activity implements RestaurantsGet
 
     private void setRestaurantRequest(RestaurantsGetter restaurantsGetter, int radius) {
         Location location = ((LocationManager) getSystemService(LOCATION_SERVICE)).
-                getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        restaurantsGetter.requestRestaurantsByPosition(location.getLongitude(),
-                location.getLatitude(), radius);
+                getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (location != null) {
+            restaurantsGetter.requestRestaurantsByPosition(location.getLongitude(),
+                    location.getLatitude(), radius);
+        }
     }
 
     @Override

@@ -9,4 +9,8 @@
     <string name="choose_restaurant">Choose Restaurant</string>
     <string name="search">Search</string>
     <string name="search_in_distance">Search in radius:</string>
+    <string name="cancel_order">Cancel Order</string>
+    <string name="cancel_all_orders">Cancel All</string>
+    <string name="ordered">Ordered:</string>
+    <string name="make_order">Make Order</string>
 </resources>

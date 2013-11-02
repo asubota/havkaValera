@@ -5,20 +5,6 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_margin="@dimen/dimen_10dp"
-            android:background="@android:color/white"
-            >
-
-        <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/restaurant_icon"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_centerHorizontal="true"
-                />
-    </RelativeLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -27,13 +13,28 @@
             android:orientation="vertical"
             >
 
-        <TextView
-                android:id="@+id/restaurant_name"
+        <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/dimen_20sp"
-                />
+                >
+
+            <com.android.volley.toolbox.NetworkImageView
+                    android:id="@+id/restaurant_icon"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    />
+
+
+            <TextView
+                    android:id="@+id/restaurant_name"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/dimen_20sp"
+                    android:layout_marginLeft="@dimen/dimen_10dp"
+                    />
+
+        </LinearLayout>
 
         <TextView
                 android:id="@+id/restaurant_description"
@@ -52,16 +53,31 @@
                 />
     </LinearLayout>
 
-    <!--<RelativeLayout-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_width="match_parent"-->
-            <!-->-->
+    <ListView
+            android:id="@+id/restaurant_menu"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:padding="@dimen/dimen_10dp"
+            android:layout_weight="1"
+            />
 
-        <!--<ru.yandex.yandexmapkit.MapView-->
-                <!--android:id="@+id/map"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:apiKey="1234567890"-->
-                <!--/>-->
+    <Button
+            android:id="@+id/make_order"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/make_order"
+            android:layout_gravity="center_horizontal"
+            />
+    <!--<RelativeLayout-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_width="match_parent"-->
+    <!-->-->
+
+    <!--<ru.yandex.yandexmapkit.MapView-->
+    <!--android:id="@+id/map"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:apiKey="1234567890"-->
+    <!--/>-->
     <!--</RelativeLayout>-->
 </LinearLayout>

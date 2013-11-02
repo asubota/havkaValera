@@ -9,20 +9,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.havkavalera.app.specify_dialog.SelectCategoryActivity;
 import com.havkavalera.app.specify_dialog.SelectRestaurantActivity;
-import org.json.JSONObject;
 
 public class MainActivity extends Activity {
 
-    private int mSearchDistance;
+    private int mSearchDistance = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +24,14 @@ public class MainActivity extends Activity {
         LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
         LocationListener mlocListener = new UserLocationListener();
-        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+        locManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
 
         final TextView distanceView = (TextView) findViewById(R.id.distance);
-        distanceView.setText(String.valueOf(1000));
+        distanceView.setText(String.valueOf(mSearchDistance));
 
         SeekBar distanceMeter = (SeekBar) findViewById(R.id.distance_meter);
         distanceMeter.setMax(10000);
-        distanceMeter.setProgress(1000);
+        distanceMeter.setProgress(mSearchDistance);
         distanceMeter.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

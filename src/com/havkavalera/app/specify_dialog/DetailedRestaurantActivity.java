@@ -1,30 +1,31 @@
 package com.havkavalera.app.specify_dialog;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.android.volley.toolbox.NetworkImageView;
 import com.havkavalera.app.R;
 import com.havkavalera.app.VolleySingleton;
+import com.havkavalera.app.adapters.MenuSelectAdapter;
+import com.havkavalera.app.info_loaders.MenuGetter;
+import com.havkavalera.app.model.MenuItem;
 import com.havkavalera.app.model.Restaurant;
-import ru.yandex.yandexmapkit.MapController;
-import ru.yandex.yandexmapkit.MapView;
-import ru.yandex.yandexmapkit.OverlayManager;
-import ru.yandex.yandexmapkit.overlay.Overlay;
-import ru.yandex.yandexmapkit.overlay.OverlayItem;
-import ru.yandex.yandexmapkit.overlay.balloon.BalloonItem;
-import ru.yandex.yandexmapkit.utils.GeoPoint;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DetailedRestaurantActivity extends Activity {
+public class DetailedRestaurantActivity extends Activity implements MenuGetter.MenuListener {
 
     public static final String RESTAURANT_KEY = "com.havkavalera.RESTAURANT_KEY";
 
     private Restaurant mRestaurant;
 //    private MapView mMap;
+
+    private MenuSelectAdapter menuSelectAdapter;
+
+    private List<MenuItem> mMenuItems = new ArrayList<MenuItem>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,16 @@ public class DetailedRestaurantActivity extends Activity {
         restaurantDescription.setText(mRestaurant.getDescription());
         restaurantAddress.setText(mRestaurant.getAddress());
 
+        MenuGetter menuGetter = new MenuGetter(this);
+        menuGetter.setMenuListener(this);
+        menuGetter.requestMenuForRestaurant(mRestaurant.mId);
+
 //        putMapBaloon();
+
+        ListView listView = (ListView) findViewById(R.id.restaurant_menu);
+        menuSelectAdapter = new MenuSelectAdapter(mMenuItems);
+        listView.setAdapter(menuSelectAdapter);
+
     }
 
     private void putMapBaloon() {
@@ -67,12 +77,23 @@ public class DetailedRestaurantActivity extends Activity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMenuReceive(List<MenuItem> menuItems) {
+        if (menuItems != null) {
+            mMenuItems.clear();
+            mMenuItems.addAll(menuItems);
+            menuSelectAdapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(this, "Failed load restaurant menu", Toast.LENGTH_SHORT).show();
+        }
     }
 }
