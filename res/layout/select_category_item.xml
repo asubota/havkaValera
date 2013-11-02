@@ -3,13 +3,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:padding="@dimen/dimen_10dp">
+              android:padding="@dimen/dimen_10dp"
+              >
+
+    <CheckBox
+            android:id="@+id/category_selected"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            style="@android:style/Widget.Holo.CompoundButton.CheckBox"
+            android:layout_gravity="center_vertical"
+            android:focusable="false"
+            />
 
     <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/category_icon"
             android:layout_width="@dimen/dimen_40dp"
             android:layout_height="@dimen/dimen_40dp"
             android:background="@android:color/white"
+            android:layout_gravity="center_vertical"
             />
 
     <TextView

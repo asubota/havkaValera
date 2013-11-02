@@ -2,6 +2,10 @@ package com.example.havkavalera.specify_dialog;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.ListView;
 import com.example.havkavalera.R;
 import com.example.havkavalera.adapters.CategorySelectAdapter;
 import com.example.havkavalera.mock.MockCategoryList;
@@ -19,8 +23,17 @@ public class SelectCategoryActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_list_layout);
 
-        PullToRefreshListView listView = (PullToRefreshListView) findViewById(R.id.selected_list);
+        ListView listView = (ListView) findViewById(R.id.selected_list);
         List<Category> categoryList = MockCategoryList.getCategories();
         listView.setAdapter(new CategorySelectAdapter(categoryList));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CheckBox checkBox = (CheckBox) view.findViewById(R.id.category_selected);
+                checkBox.toggle();
+            }
+        });
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

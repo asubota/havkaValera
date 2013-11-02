@@ -2,6 +2,7 @@ package com.example.havkavalera.specify_dialog;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ListView;
 import com.example.havkavalera.R;
 import com.example.havkavalera.adapters.RestaurantSelectAdapter;
 import com.example.havkavalera.mock.MockRestaurantsList;
@@ -19,8 +20,10 @@ public class SelectRestaurantActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_list_layout);
 
-        PullToRefreshListView listView = (PullToRefreshListView) findViewById(R.id.selected_list);
+        ListView listView = (ListView) findViewById(R.id.selected_list);
         List<Restaurant> restaurants = MockRestaurantsList.getRestaurants();
         listView.setAdapter(new RestaurantSelectAdapter(restaurants));
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }
