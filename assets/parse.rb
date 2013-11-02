@@ -12,8 +12,8 @@ doc = Nokogiri::HTML(open('http://hrum.com.ua/restaurants/all/kiev')).css('.item
   logo_src = item.css('.item_logo img')[0]['src']
   logo_alt = item.css('.item_logo img')[0]['alt']
   
-  geo_lng = item.css('.address .gmaper')[0]['data-lng']
-  geo_lat = item.css('.address .gmaper')[0]['data-lat']
+  geo_lng = item.css('.address .gmaper')[0]['data-lng'].to_f
+  geo_lat = item.css('.address .gmaper')[0]['data-lat'].to_f
   geo_title=item.css('.address .gmaper')[0]['data-title']
 
   note = item.css('.note').text.strip
@@ -23,10 +23,13 @@ doc = Nokogiri::HTML(open('http://hrum.com.ua/restaurants/all/kiev')).css('.item
   delivery      = item.css('.info_box li')[3].css('span').text.split
   category      = item.css('.info_box li')[2].css('span').text
 
-  image_path = "../public/media/logo/" + logo_src.sub('/images/', '') 
+
+=begin
+  image_path = "../public/media/logo/" + logo_src.sub('/images/', '')  + '.jpg' 
   open(image_path, 'wb') do |file|
     file << open("http://hrum.com.ua#{logo_src}").read
   end
+=end
 
   r = {
       name: key,
@@ -34,7 +37,7 @@ doc = Nokogiri::HTML(open('http://hrum.com.ua/restaurants/all/kiev')).css('.item
       lat: geo_lat,
       lng: geo_lng,
       logo: {
-        src: logo_src.sub('/images.','/media/logo'),
+        src: logo_src.sub('/images/', '/media/logo/') + '.jpg',
         alt: logo_alt
       },
       address: {
