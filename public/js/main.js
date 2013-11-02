@@ -36,9 +36,9 @@ function show_venue_on_map(venue) {
 
 function showObjectsNear(position) {
 	var lat = position.coords.latitude;
-  var long = position.coords.longitude;
+    var long = position.coords.longitude;
 
-	jQuery.post('/location/'+long+'/'+lat, function(resp) {
+	jQuery.get('/restaurants/'+long+'/'+lat, function(resp) {
 		// remove all old placemarks
 		jQuery.each(placemarks, function(placemark) {
 			myMap.geoObjects.remove(placemark);
@@ -51,7 +51,7 @@ function showObjectsNear(position) {
 }
 
 function showObjectsNearByCategory(category) {
-	jQuery.post('/restaurants/'+category, function(resp) {
+	jQuery.get('/restaurants/'+category, function(resp) {
 		// remove all old placemarks
 		jQuery.each(placemarks, function(placemark) {
 			myMap.geoObjects.remove(placemark);
