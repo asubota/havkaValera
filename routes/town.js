@@ -4,6 +4,7 @@
  */
 
 var MongoClient = require('mongodb').MongoClient;
+var ObjectID = require('mongodb').ObjectID;
 var mongoCreds = 'mongodb://127.0.0.1:27017/havka';
 
 exports.list = function(req, res){
@@ -37,7 +38,7 @@ exports.getTownById = function(req, res){
             db.close();
         }else{
             var townsCollection = db.collection('towns');
-            townsCollection.find( { _id : req.params.id } ).toArray(function(err, results) {
+            townsCollection.find( { _id : new ObjectID( req.params.id ) } ).toArray(function(err, results) {
                 if(err){
                     console.log( "Collection find error: " + err );
                     res.send( [] );
