@@ -1,10 +1,11 @@
 require 'nokogiri'
 require 'open-uri'
+require "active_support/core_ext"
+require 'open-uri'
 
-restaurants = [];
+restaurants = []
 
-doc = Nokogiri::HTML(open('http://hrum.com.ua/restaurants/all/kiev'))
-doc.css('.item_box').each do |item|
+doc = Nokogiri::HTML(open('http://hrum.com.ua/restaurants/all/kiev')).css('.item_box').each do |item|
   
   title = item.css('.title').text.strip
   key = item.css('.hd_inner a.restaurant_title')[0]['href'].sub('/menu/','')
@@ -22,29 +23,44 @@ doc.css('.item_box').each do |item|
   delivery      = item.css('.info_box li')[3].css('span').text.split
   category      = item.css('.info_box li')[2].css('span').text
 
-  restaurants.push "'#{key}' = {
-    'title': '#{title}',
-    'logo': {
-      'src': '#{logo_src}',
-      'alt': '#{logo_alt}'
-    },
-    'lat': '#{geo_lat}',
-    'lng': '#{geo_lng}',
-    'address': {
-      'street': '#{geo_title}'
-    },
-    'info': {
-      'note': '#{note}',
-      'category': '#{category}'
-    },
-    'delivery': {
-      'min_cost': '#{min_cost.sub('грн.','').strip}',
-      'time': '#{delivery_time}',
-      'cost': '#{delivery[0]}',
-      'currency': '#{delivery[1].sub('грн.','UAH').strip}'
-    }
-  }" 
+  image_path = "../public/media/logo/" + logo_src.sub('/images/', '') 
+  open(image_path, 'wb') do |file|
+    file << open("http://hrum.com.ua#{logo_src}").read
+  end
 
+  r = {
+      name: key,
+      title: title,
+      lat: geo_lat,
+      lng: geo_lng,
+      logo: {
+        src: logo_src,
+        alt: logo_alt
+      },
+      address: {
+        street: geo_title
+      },
+      info: {
+        note: note,
+        category: category
+      },
+      delivery: {
+        min_cost: min_cost.sub('грн.','').strip,
+        time: delivery_time,
+        cost: delivery[0],
+        currency: delivery[1].sub('грн.','UAH').strip
+      }
+    
+  }
+
+  restaurants.push r
 end
 
-File.open('restaurants.json', 'w') { |file| file.write restaurants.join("\n,") }
+
+rests = restaurants.map(&:to_json).join(",\n")
+
+rests = "var restaurants = [#{rests}];
+
+exports.restaurants = restaurants;"
+
+File.open('restaurants.json', 'w') { |file| file.write rests }
