@@ -4,9 +4,13 @@
  */
 
 var express = require('express');
+
+
 var routes = require('./routes');
 var user = require('./routes/user');
 var town = require('./routes/town');
+var restaurants = require('./routes/restaurants');
+
 var http = require('http');
 var path = require('path');
 
@@ -46,10 +50,22 @@ app.get('/users', user.list);
  * Towns routes
  * BEGIN
  */
-app.get('/town', town.list);
-app.get('/town/:id', town.getTownById);
+app.get('/town'       , town.list);
+app.get('/town/:id'   , town.getTownById);
 /*
  * Towns routes
+ * END
+ */
+
+ /*
+ * Restaurants routes
+ * BEGIN
+ */
+app.get('/restaurant'                , restaurants.list);
+app.get('/restaurant/:id'            , restaurants.getRestaurantById );
+app.get('/restaurant/:lng/:lat/:r'   , restaurants.getRestaurantByLocation );
+/*
+ * Restaurants routes
  * END
  */
 
