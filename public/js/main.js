@@ -1,6 +1,6 @@
 ymaps.ready(init);
 
-var myMap, placemarks = [];
+var myMap, currentPosition, placemarks;
 
 function init(){     
 	myMap = new ymaps.Map ("map", {
@@ -8,10 +8,17 @@ function init(){
     zoom: 15,
   });
 	
+	myMap.controls.add(
+    new ymaps.control.ZoomControl()
+	);
+
+	placemarks = new ymaps.GeoObjectCollection();
 	navigator.geolocation.getCurrentPosition(show_map);
 }
 
 function show_map(position) {
+	currentPosition = position;
+	
   var lat = position.coords.latitude;
   var long = position.coords.longitude;
   // let's show a map or do something interesting!
@@ -24,41 +31,61 @@ function show_map(position) {
 	});
 
 	var myPlacemark = new ymaps.Placemark([lat, long]);
-	placemarks.push(myPlacemark);
-	myMap.geoObjects.add(myPlacemark);
+	placemarks.add(myPlacemark);
+	myMap.geoObjects.add(placemarks);
 }
 
-function show_venue_on_map(venue) {
-	var placemark = new ymaps.Placemark([venue.lat, venue.long], { content: venue.title, balloonContent: venue.description });
-	placemarks.push(placemark);
-	myMap.geoObjects.add(placemark);
-}
-
-function showObjectsNear(position) {
-	var lat = position.coords.latitude;
-    var long = position.coords.longitude;
-
-	jQuery.get('/restaurants/'+long+'/'+lat, function(resp) {
-		// remove all old placemarks
-		jQuery.each(placemarks, function(placemark) {
-			myMap.geoObjects.remove(placemark);
-		});
-		
-		jQuery.each(resp.objects, function(venue) {
-			show_venue_on_map(venue);
-		});
+function remove_old_placemarks() {
+	// remove all old placemarks
+	jQuery.each(placemarks, function(placemark) {
+		myMap.geoObjects.remove(placemark);
 	});
+	
+	placemarks = new ymaps.GeoObjectCollection();
 }
+
+function show_venues_on_map(venues) {
+	// Creating a collection of geo objects.
+	//var placemarks = new ymaps.GeoObjectCollection();
+	var current_pos = new ymaps.Placemark([currentPosition.coords.latitude, currentPosition.coords.longitude]);
+
+	placemarks.add(current_pos);
+	
+  jQuery.each(venues, function() {	
+	  var placemark = new ymaps.Placemark([this.lat, this.lng], { content: this.title, balloonContent: this.title+'\n'+this.description });
+	  placemarks.add(placemark);
+	});
+
+	// Adding the collection to the map.
+	myMap.geoObjects.add(placemarks);
+	// Setting the map center and zoom so that the entire collection is included.
+	myMap.setBounds(placemarks.getBounds());	
+};
+ 
+function showObjectsNear(position) {
+	var lat = position.coords.latitude,
+  		lng = position.coords.longitude;
+
+	var stub = [{
+		title: 'Сказка Востока',
+		lat: 50.324586,
+		lng: 30.563057999999955,
+		description: 'Столичное шоссе 35'
+	}];
+	
+	//jQuery.get('/restaurants/'+lng+'/'+lat, function(resp) {
+		remove_old_placemarks();
+		show_venues_on_map(stub);
+	//});
+};
 
 function showObjectsNearByCategory(category) {
 	jQuery.get('/restaurants/'+category, function(resp) {
-		// remove all old placemarks
-		jQuery.each(placemarks, function(placemark) {
-			myMap.geoObjects.remove(placemark);
-		});
+		remove_old_placemarks();
 
-		jQuery.each(resp.objects, function(venue) {
-			show_venue_on_map(venue);
-		});
+		//jQuery.each(resp.objects, function(venue) {
+			remove_old_placemarks();
+		  show_venues_on_map(stub);
+		//});
 	});
 }
