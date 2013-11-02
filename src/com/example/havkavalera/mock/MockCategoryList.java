@@ -9,9 +9,9 @@ public class MockCategoryList {
 
     public static List<Category> getCategory() {
         List<Category> categories = new ArrayList<Category>();
-        categories.add(new Category("Name0", null));
-        categories.add(new Category("Name1", null));
-        categories.add(new Category("Name2", null));
+        categories.add(new Category(0l, "Name0", null));
+        categories.add(new Category(1l, "Name1", null));
+        categories.add(new Category(2l, "Name2", null));
 
         return categories;
     }

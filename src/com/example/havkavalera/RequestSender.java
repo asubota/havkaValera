@@ -1,5 +1,6 @@
 package com.example.havkavalera;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.Toast;
 import com.android.volley.Request;
@@ -13,8 +14,8 @@ public class RequestSender {
 
     private final RequestQueue mRequestQueue;
 
-    public RequestSender(RequestQueue requestQueue) {
-        this.mRequestQueue = requestQueue;
+    public RequestSender(Context context) {
+        this.mRequestQueue = VolleySingleton.getInstance(context).getRequestQueue();
     }
 
     public void sendRequest(String url) {
@@ -23,7 +24,7 @@ public class RequestSender {
             @Override
             public void onResponse(JSONObject response) {
 //                txtDisplay.setText("Response => " + response.toString());
-//                findViewById(R.id.progressBar1).setVisibility(View.GONE);
+//                findViewById(R.mId.progressBar1).setVisibility(View.GONE);
 //                Toast.makeText(MainActivity.this, "everything ok", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
@@ -32,7 +33,7 @@ public class RequestSender {
             @Override
             public void onErrorResponse(VolleyError error) {
 //                Toast.makeText(MainActivity.this, "everything failed " + error.networkResponse.statusCode, Toast.LENGTH_SHORT).show();
-//                findViewById(R.id.progressBar1).setVisibility(View.GONE);
+//                findViewById(R.mId.progressBar1).setVisibility(View.GONE);
             }
         });
 
