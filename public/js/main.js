@@ -29,6 +29,11 @@ function init(){
 	$('.where_am_i').click(function() {
 		show_where_am_i(currentPosition);
 	});
+	
+	$('.cousins li a').click(function(){
+		var category_id = $(this).data('category-id');
+		showObjectsNearByCategory(category_id);
+	})
 }
 
 function handle_error(err) {
@@ -101,8 +106,8 @@ function showObjectsNear(position) {
 	});
 };
 
-function showObjectsNearByCategory(category) {
-	jQuery.get('/restaurants/'+category, function(resp) {
+function showObjectsNearByCategory(category_id) {
+	jQuery.get('/restaurants/'+category_id, function(resp) {
 		remove_old_placemarks();
 		show_venues_on_map(resp);
 	});
