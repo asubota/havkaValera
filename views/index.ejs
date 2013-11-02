@@ -13,6 +13,7 @@
     <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
     <script src="js/main.js" type="text/javascript"></script>
     <script src="js/logo.js" type="text/jsx"></script>
+    <script src="js/menu.js" type="text/jsx"></script>
   </head>
   <body>
     <div id="map" style="width: 600px; height: 400px; position: absolute;"></div>
@@ -20,28 +21,8 @@
     <div class="container" style="position: absolute">
       <section class="col-md-12">
           <div class="navbar navbar-inverse">
-            <div class="navbar-collapse collapse navbar-collapse-01">
-              <ul class="nav navbar-nav navbar-left">
-                <li class="active">
-                  <a href="/">
-                    <img src="images/icons/svg/compas.svg" alt="Compas">
-                    <span class="menu-text"> Где я?  </span>
-                  </a>
-                </li>
-
-                <li >
-                  <a href="/">
-                    <img src="images/icons/svg/clipboard.svg" alt="Clipboard">
-                    <span class="menu-text"> Хочу  </span>
-                  </a>
-                </li>
-
-                <li >
-                  <a href="/">
-                    <img src="images/icons/svg/paper-bag.svg" alt="Pocket">
-                    <span class="menu-text"> Достака  </span>
-                  </a>
-                </li>
+            <div class="navbar-collapse collapse navbar-collapse-01" id="menu">
+              <ul class="nav navbar-nav navbar-left" >
                 
                 <li id="logo">
                 </li>
