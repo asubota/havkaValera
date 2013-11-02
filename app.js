@@ -84,8 +84,7 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRe
     }
 );
 
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 /////////////////////////
 ///////////////////
