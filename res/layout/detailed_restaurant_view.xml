@@ -62,7 +62,7 @@
             />
 
     <Button
-            android:id="@+id/make_order"
+            android:id="@+id/make_order_all"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:text="@string/make_order"

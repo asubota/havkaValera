@@ -33,6 +33,7 @@ public class MenuGetter {
 
     }
 
+
     private void sendRequestArray(String url) {
         JsonArrayRequest jsObjRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
@@ -66,7 +67,7 @@ public class MenuGetter {
         String name = jso.getString("name");
         String image = jso.getString("image");
         String description = jso.getString("description");
-        int price = 0; //todo price parse
+        int price = jso.getInt("price");
         String category = jso.getString("category");
 
         MenuItem menuItem = new MenuItem(id);

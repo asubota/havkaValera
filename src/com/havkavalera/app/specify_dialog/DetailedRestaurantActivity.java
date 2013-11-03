@@ -1,7 +1,10 @@
 package com.havkavalera.app.specify_dialog;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +60,15 @@ public class DetailedRestaurantActivity extends Activity implements MenuGetter.M
         ListView listView = (ListView) findViewById(R.id.restaurant_menu);
         menuSelectAdapter = new MenuSelectAdapter(mMenuItems);
         listView.setAdapter(menuSelectAdapter);
+
+        Button makeOrder = (Button) findViewById(R.id.make_order_all);
+        makeOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailedRestaurantActivity.this, OrderActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
