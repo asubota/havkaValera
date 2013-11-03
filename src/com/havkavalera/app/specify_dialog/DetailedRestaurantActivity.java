@@ -32,6 +32,7 @@ public class DetailedRestaurantActivity extends Activity implements MenuGetter.M
     private ArrayList<MenuItem> mMenuItems = new ArrayList<MenuItem>();
 
     private ProgressDialog progressDialog;
+    private Location location;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,11 @@ public class DetailedRestaurantActivity extends Activity implements MenuGetter.M
         listView.setAdapter(menuSelectAdapter);
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        final Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        } else if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
 
         Button makeOrder = (Button) findViewById(R.id.make_order_all);
         makeOrder.setOnClickListener(new View.OnClickListener() {

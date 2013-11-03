@@ -63,8 +63,13 @@ public class SelectRestaurantActivity extends Activity implements RestaurantsGet
     }
 
     private void setRestaurantRequest(RestaurantsGetter restaurantsGetter, int radius) {
-        Location location = ((LocationManager) getSystemService(LOCATION_SERVICE)).
-                getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        LocationManager lm = ((LocationManager) getSystemService(LOCATION_SERVICE));
+        Location location = null;
+        if (lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        } else if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
         if (location != null) {
             restaurantsGetter.requestRestaurantsByPosition(location.getLongitude(),
                     location.getLatitude(), radius);

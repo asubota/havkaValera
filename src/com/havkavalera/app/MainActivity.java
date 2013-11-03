@@ -24,7 +24,11 @@ public class MainActivity extends Activity {
         LocationManager locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
         LocationListener mlocListener = new UserLocationListener();
-        locManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
+        if (locManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            locManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocListener);
+        } else if (locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+        }
 
         final TextView distanceView = (TextView) findViewById(R.id.distance);
         distanceView.setText(String.valueOf(mSearchDistance));
