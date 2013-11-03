@@ -46,10 +46,10 @@ var RestItem = React.createClass({
         <img className='r-img' src={r.logo.src} />
         <span className='r-title'>{r.title}</span>
         <span className='r-info'>{r.info.note}</span>
-        <span className='r-addr fui-location'>{r.address.street}</span>
-        <span className='r-delivery-cost'>{r.delivery.cost}</span>
+        <span className='r-addr fui-location badge'>{r.address.street}</span>
+        <span className='r-delivery-cost badge'>{r.delivery.cost}</span>
         <span className='r-delivery-min'>{r.delivery.min}</span>
-        <span className='r-delivery-time fui-time'>{r.delivery.time}</span>
+        <span className='r-delivery-time fui-time badge'>{r.delivery.time}</span>
       </div>
     );
   }
