@@ -106,7 +106,9 @@ var SingleRest = React.createClass({
     return <div />
   }
 });
-  
+
+function ToOrder(rest_id, m){
+}
 
 var MenuItem = React.createClass({
   render: function(){
@@ -163,10 +165,21 @@ var RestorantsBox = React.createClass({
       visible: false
     };
   },
+  handleOrderAdd: function(rest_id, m){
+    var orders = this.state.orders || [];
+    m.rest_id = rest_id;
+    orders.push(m);
+    this.setState({orders: orders});
+  },
   render: function() {
     var cat = this.state.filterCat;
+    var obox = <OrderBox orders={this.state.orders} />;
     if (this.state.current) {
-      return <SingleRest rest_id={this.state.current} />;
+      return( <div>
+          {obox}
+          <SingleRest rest_id={this.state.current} o={this.handleOrderAdd}/>
+          </div>
+            );
     } else {
       if (this.state.visible) {
         return (
@@ -177,6 +190,17 @@ var RestorantsBox = React.createClass({
       }
     }
     return <div />
+  }
+});
+
+var OrderBox = React.createClass({
+  render: function(){
+    if (!this.props.orders) {
+      return <div />
+    }
+    return (
+      <h5> Ваш Заказ {(this.props.orders).length}</h5>
+    )
   }
 });
 
