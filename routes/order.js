@@ -43,7 +43,7 @@ exports.getOrders = function( req, res ){
 
 exports.saveOrder = function( req, res ){
 
-    if( req.user === undefined && orderParams.user_id === undefined ){
+    if( req.user === undefined && req.body.user_id === undefined ){
         res.send( { "error" : "user" } );
     }else if( req.body === undefined ){
         res.send( { "error" : "no order" } );
@@ -51,7 +51,7 @@ exports.saveOrder = function( req, res ){
         var orderParams = req.body;
         orderParams.date = new Date();
         orderParams.status = 'new';
-        orderParams.user_id = req.user.id;
+        orderParams.user_id = req.body.user_id;
 
         console.log( orderParams );
 
