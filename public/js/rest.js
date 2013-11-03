@@ -42,7 +42,7 @@ var RestItem = React.createClass({
     var r = this.props.data;
     console.log("[info] rest", r);
     return(
-      <div className='col-md-12 .r-item'>
+      <div className='col-md-12 r-item tile'>
         <img className='r-img' src={r.logo.src} />
         <span className='r-title'>{r.title}</span>
         <span className='r-info'>{r.info.note}</span>
