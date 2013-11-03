@@ -1,5 +1,43 @@
+
+body{
+    font-size: 11px !important;
+}
+
 #restaurant-block{
-	position: absolute;
-	top: 100px;
-	left: 100px;
+	position: fixed;
+    background-color: #efefef;
+    top: 0;
+    right: 0;
+    width: 500px;
+    height: 500px;
+    display: none;
+}
+
+div .hide_menu{
+    position: absolute;
+    color: #333;
+    display: block;
+    font-size: 16px;
+
+    cursor: pointer;
+
+    top: 10px;
+    left: 10px;
+}
+
+#restaurant-block .menu{
+    float: left;
+    width: 200px;
+    max-height: 470px;
+    overflow: auto;
+}
+
+#order-block{
+    position: fixed;
+    background-color: #efefef;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 500px;
+    display: none;
 }

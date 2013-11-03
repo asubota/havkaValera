@@ -38,7 +38,13 @@ function init(){
 	$('.cousins li a').click(function(){
 		var category_id = $(this).data('category-id');
 		showObjectsNearByCategory(category_id);
-	})
+	});
+
+    $('.hide_menu').click(function( e ){
+
+        $( e.target ).parent().slideUp();
+    });
+
 }
 
 function handle_error(err) {
@@ -92,9 +98,7 @@ function show_venues_on_map(venues) {
         var placemark = new ymaps.Placemark([this.lat, this.lng], { content: this.title, balloonContent: this.title+'<br/><small>'+this.address.street+'</small>' });
         placemark.venus = this;
         placemark.events.add('click', function ( e ) {
-            console.log( e._fb.target );
-
-   	      	showRestaurantBlock(e._fb.target.venus._id); 
+            restDetailer( e._fb.target.venus );
         });
         placemarks.add(placemark);
 	});
@@ -107,12 +111,26 @@ function show_venues_on_map(venues) {
 	}
 };
 
+var currentRest = {};
+
 function showRestaurantBlock(id){
 	var restaurant_block = jQuery('#restaurant-block');
 	jQuery.get('/restaurant/'+id, function(resp) {
 		console.log( resp );
-		restaurant_block.find('#restaurant-logo').attr('src', resp.logo.src)
-		restaurant_block.find('#restaurant-name').html(resp.name)
+        currentRest = resp;
+		restaurant_block.find('#restaurant-logo').attr('src', resp.logo.src);
+		restaurant_block.find('#restaurant-name').html(resp.name);
+        restaurant_block.find('#restaurant-description').html(resp.info.note);
+
+        var html = '';
+        for( var i = 0; i < resp.menu.length; i++ ){
+            html += '<li><a href="#" class="add_to_menu" data-action="addToOrder" data-mid="'+resp.menu[i].key+'">' +
+            '<h5>'+resp.menu[i].name+'</h5><span>'+resp.menu[i].description+'</span>' +
+            '</a></li>';
+        }
+        $("#restaurant-block").children(".menu").children("ul").html( html );
+
+        $("#restaurant-block").show();
 	});	
 } 
 
@@ -146,3 +164,40 @@ function reverse_geocode(position) {
 	  return result.results[0].formatted_address;
   });
 }
+
+function restDetailer( rest ){
+    showRestaurantBlock( rest._id );
+}
+
+jQuery(document).click(function(e){
+    var action = getActionElement( e.target );
+    if( action !== undefined ){
+        e.preventDefault();
+        window[action]( e );
+    }
+
+    return false;
+});
+
+var actionElement;
+
+function getActionElement( element ){
+    var action = $( element ).attr( "data-action" );
+
+    if( action === undefined && element.parentElement !== null ){
+        return getActionElement( element.parentElement );
+    }else if( action === undefined && element.parentElement === null ){
+        return undefined;
+    }else{
+        actionElement = element;
+        return action;
+    }
+}
+
+var order = [];
+
+function addToOrder( e ){
+    $("#order-block").show();
+    order.push( $(actionElement).attr("data-mid") );
+}
+

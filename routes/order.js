@@ -53,8 +53,6 @@ exports.saveOrder = function( req, res ){
         orderParams.status = 'new';
         orderParams.user_id = req.body.user_id;
 
-        console.log( orderParams );
-
         getAdressByLngLat( orderParams.lng, orderParams.lat, function( data ){
             orderParams.address = data;
 
