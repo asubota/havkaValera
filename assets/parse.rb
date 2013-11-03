@@ -9,9 +9,10 @@ restaurants = []
 def get_menu(hash)
   meals = []
 
-  restaurant_page = Nokogiri::HTML(open("http://hrum.com.ua/menu/adriano")).css('.menu_list').each do |rest|
+  restaurant_page = Nokogiri::HTML(open("http://hrum.com.ua/menu/#{hash}")).css('.menu_list').each do |rest|
       meal_category = rest.css('.menu_btn').text.strip
-      category_meal = rest.css('.menu_togle li').each do |meal|
+
+      rest.css('.menu_togle li').each do |meal|
         next unless meal.at_css('.pic')
 
         key       = meal['id']
@@ -39,9 +40,9 @@ def get_menu(hash)
 
         m = {
           key: key,
+          category: meal_category,
           hash: hash,
           parent: parent,
-          category: meal_category,
           image: image,
           price: meal_price.sub('грн.', '').strip,
           currency: 'UAH',

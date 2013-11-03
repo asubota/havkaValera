@@ -6,6 +6,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 var mongoCreds = 'mongodb://127.0.0.1:27017/havka';
+var _ = require('underscore');
 
 exports.list = function(req, res){
     MongoClient.connect( mongoCreds , function(err, db) {
@@ -47,11 +48,10 @@ exports.categories = function(req, res){
                 if(err){
                     res.send( [] );
                 }else{
-                    var i = 0;
-                    for( i = 0; i < results.length; i++ ){
-                        categories.push( results[i].info.category );
+                    for( var i = 0; i < results.length; i++ ){
+                        categories.push(  _.pluck( results[i].menu, 'category' ) );
                     }
-                    res.send( arrayUnique( categories ) );
+                    res.send( _.uniq( _.flatten( categories ) ) );
                 }
                 db.close();
             });
