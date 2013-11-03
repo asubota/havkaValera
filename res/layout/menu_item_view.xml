@@ -49,43 +49,52 @@
                     android:layout_marginBottom="@dimen/dimen_5dp"
                     />
 
-            <TextView
-                    android:id="@+id/menu_price"
+            <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="asdfasdf"
-                    android:textColor="@android:color/white"
-                    android:layout_marginBottom="@dimen/dimen_5dp"
-                    android:textSize="@dimen/dimen_18sp"
-                    />
-        </LinearLayout>
+                    >
 
-        <LinearLayout
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_40dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                >
+                <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/price"
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="@dimen/dimen_5dp"
+                        android:textSize="@dimen/dimen_18sp"
+                        />
 
-            <TextView
+                <TextView
+                        android:id="@+id/menu_price"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="@dimen/dimen_5dp"
+                        android:textSize="@dimen/dimen_18sp"
+                        />
+
+            </LinearLayout>
+
+            <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:layout_marginBottom="@dimen/dimen_5dp"
-                    android:textSize="@dimen/dimen_18sp"
-                    android:text="@string/ordered"
-                    />
+                    >
+                <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="@dimen/dimen_5dp"
+                        android:textSize="@dimen/dimen_18sp"
+                        android:text="@string/ordered"
+                        />
 
-            <TextView
-                    android:id="@+id/items_ordered"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:layout_marginBottom="@dimen/dimen_5dp"
-                    android:textSize="@dimen/dimen_18sp"
-                    />
+                <TextView
+                        android:id="@+id/items_ordered"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/dimen_18sp"
+                        />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

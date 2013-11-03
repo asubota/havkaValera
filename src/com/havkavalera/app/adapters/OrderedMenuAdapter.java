@@ -52,7 +52,7 @@ public class OrderedMenuAdapter extends BaseAdapter {
 
         networkImageView.setImageUrl(menuItem.getImageUrl(), VolleySingleton.getInstance(context).getImageLoader());
         menuTitle.setText(menuItem.getName());
-        price.setText(String.valueOf(menuItem.getPrice()));
+        price.setText(String.valueOf(menuItem.getPrice()) + " " + menuItem.getCurrency());
         count.setText(String.valueOf(menuItem.getOrdered()));
 
         return view;

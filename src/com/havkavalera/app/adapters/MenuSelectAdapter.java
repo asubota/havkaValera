@@ -52,7 +52,7 @@ public class MenuSelectAdapter extends BaseAdapter {
         networkImageView.setImageUrl(menuItem.getImageUrl(), VolleySingleton.getInstance(context).getImageLoader());
         menuName.setText(menuItem.getName());
 //        menuDescription.setText(menuItem.getDescription());
-        menuPrice.setText(String.valueOf(menuItem.getPrice()));
+        menuPrice.setText(String.valueOf(menuItem.getPrice()) + " " + menuItem.getCurrency());
 
         final TextView itemsOrdered = (TextView) view.findViewById(R.id.items_ordered);
         itemsOrdered.setText(String.valueOf(menuItem.getOrdered()));

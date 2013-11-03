@@ -106,18 +106,24 @@ public class OrderActivity extends Activity implements UserAuth.UserListener {
         OrderSend orderSend = new OrderSend(this);
 
         String url = ConnectionInfo.getHttpHostAddress() + "/order";
-        if (user != null) {
-            orderSend.sendRequest(url, user.mId, order);
+
+        if (TextUtils.isEmpty(phoneNumber.getText().toString())) {
+            Toast.makeText(this, "Please, enter your mobile phone.", Toast.LENGTH_SHORT).show();
+        } else if (order.getOrderedMenu().size() <= 0) {
+            Toast.makeText(this, "Please, choose some orders.", Toast.LENGTH_SHORT).show();
+        } else {
+            SharedPreferences pref = getSharedPreferences(PREF, Context.MODE_WORLD_READABLE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString(PHONE_NUMBER, phoneNumber.getText().toString());
+            editor.commit();
+
+            if (user != null) {
+                orderSend.sendRequest(url, user.mId, order);
+            }
+
+            Toast.makeText(this, "Your order sent to server.", Toast.LENGTH_SHORT).show();
+            finish();
         }
-
-        SharedPreferences pref = getSharedPreferences(PREF, Context.MODE_WORLD_READABLE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString(PHONE_NUMBER, phoneNumber.getText().toString());
-        editor.commit();
-
-
-        Toast.makeText(this, "Your order sent to server.", Toast.LENGTH_SHORT).show();
-        finish();
     }
 
     @Override

@@ -10,10 +10,11 @@ public class MenuItem implements Parcelable {
     private String mName;
     private String mImageUrl;
     private String mDescription;
-    private int mPrice;
+    private float mPrice;
     private String category;
 
     private int mOrdered;
+    private String mCurrency;
 
     public MenuItem(String key) {
         this.mKey = key;
@@ -24,9 +25,10 @@ public class MenuItem implements Parcelable {
         mName = source.readString();
         mImageUrl = source.readString();
         mDescription = source.readString();
-        mPrice = source.readInt();
+        mPrice = source.readFloat();
         category = source.readString();
         mOrdered = source.readInt();
+        mCurrency = source.readString();
     }
 
     public String getName() {
@@ -53,11 +55,11 @@ public class MenuItem implements Parcelable {
         this.mDescription = mDescription;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return mPrice;
     }
 
-    public void setPrice(int mPrice) {
+    public void setPrice(float mPrice) {
         this.mPrice = mPrice;
     }
 
@@ -77,6 +79,14 @@ public class MenuItem implements Parcelable {
         return mOrdered;
     }
 
+    public void setCurrency(String currency) {
+        this.mCurrency = currency;
+    }
+
+    public String getCurrency() {
+        return mCurrency;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -88,9 +98,10 @@ public class MenuItem implements Parcelable {
         dest.writeString(mName);
         dest.writeString(mImageUrl);
         dest.writeString(mDescription);
-        dest.writeInt(mPrice);
+        dest.writeFloat(mPrice);
         dest.writeString(category);
         dest.writeInt(mOrdered);
+        dest.writeString(mCurrency);
     }
 
     public static final Parcelable.Creator<MenuItem> CREATOR = new Parcelable.Creator<MenuItem>() {

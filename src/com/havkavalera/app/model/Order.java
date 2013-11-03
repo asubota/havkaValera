@@ -13,7 +13,7 @@ public class Order implements Parcelable {
 
     private ArrayList<MenuItem> orderedMenu = new ArrayList<MenuItem>();
     private Restaurant restaurant;
-    private int total = 0;
+    private float total = 0;
 
     public Order(Restaurant restaurant, ArrayList<MenuItem> orderedMenu) {
         this.orderedMenu = orderedMenu;
@@ -28,7 +28,7 @@ public class Order implements Parcelable {
 
     public Order(Parcel source) {
         source.readList(orderedMenu, MenuItem.class.getClassLoader());
-        total = source.readInt();
+        total = source.readFloat();
         restaurant = source.readParcelable(Restaurant.class.getClassLoader());
     }
 
@@ -42,7 +42,7 @@ public class Order implements Parcelable {
         return menuItems;
     }
 
-    public int getTotal() {
+    public float getTotal() {
         return total;
     }
 
@@ -58,7 +58,7 @@ public class Order implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeList(orderedMenu);
-        dest.writeInt(total);
+        dest.writeFloat(total);
         dest.writeParcelable(restaurant, flags);
     }
 

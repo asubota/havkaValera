@@ -67,8 +67,9 @@ public class MenuGetter {
         String name = jso.getString("name");
         String image = jso.getString("image");
         String description = jso.getString("description");
-        int price = jso.getInt("price");
+        float price = (float) jso.getDouble("price");
         String category = jso.getString("category");
+        String currency = jso.getString("currency");
 
         MenuItem menuItem = new MenuItem(id);
         menuItem.setName(name);
@@ -76,6 +77,7 @@ public class MenuGetter {
         menuItem.setDescription(description);
         menuItem.setPrice(price);
         menuItem.setCategory(category);
+        menuItem.setCurrency(currency);
 
         return menuItem;
     }
