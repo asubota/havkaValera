@@ -93,8 +93,8 @@ var SingleRest = React.createClass({
       var r=this.state.rest;
       var rest_id = this.props.rest_id;
       var menus = r.menu.map(function(m){
-            return <MenuItem data={m} rest_id={rest_id} />;
-          });
+            return <MenuItem data={m} rest_id={rest_id} o={this.props.o} />;
+          }.bind(this));
       return (
         <div>
           <h1>{r.title}</h1>
@@ -111,6 +111,10 @@ function ToOrder(rest_id, m){
 }
 
 var MenuItem = React.createClass({
+  handleAdd: function(){
+    var o = this.props.o;
+    o(this.props.rest_id, this.props.data);
+  },
   render: function(){
     var m = this.props.data;
     return (
@@ -129,6 +133,7 @@ var MenuItem = React.createClass({
           <h5>{m.name}</h5>
           <img className="m-img" src={m.image} />
           <span className="m-price badge">{m.price}</span>
+          <a className="btn btn-block btn-lg btn-danger" onClick={this.handleAdd}>Хочу єту шнягу</a>
       </div>
     );
   }
