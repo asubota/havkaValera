@@ -93,6 +93,8 @@ function show_venues_on_map(venues) {
         placemark.venus = this;
         placemark.events.add('click', function ( e ) {
             console.log( e._fb.target );
+
+   	      	showRestaurantBlock(e._fb.target.venus._id); 
         });
         placemarks.add(placemark);
 	});
@@ -104,7 +106,16 @@ function show_venues_on_map(venues) {
 	  myMap.setBounds(placemarks.getBounds());
 	}
 };
- 
+
+function showRestaurantBlock(id){
+	var restaurant_block = jQuery('#restaurant-block');
+	jQuery.get('/restaurant/'+id, function(resp) {
+		console.log( resp );
+		restaurant_block.find('#restaurant-logo').attr('src', resp.logo.src)
+		restaurant_block.find('#restaurant-name').html(resp.name)
+	});	
+} 
+
 function showObjectsNear(position) {
 	var lat = position.coords.latitude,
   		lng = position.coords.longitude;
