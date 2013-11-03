@@ -128,30 +128,6 @@ app.get('/restaurant/:lng/:lat/:r/:category' , function( req, res ){ res.send( "
  * Restaurants routes
  * END
  */
-/*
-app.get('/reverse_geocode/:lat/:lng', function(req, response) {
-	var url = "/maps/api/geocode/json?latlng="+req.params['lat']+","+req.params['lng']+"&sensor=false&language=ru", output = '';
-	var options = {
-  	hostname: 'maps.googleapis.com',
-  	port: 80,
-  	path: url,
-  	method: 'POST'
-	};
-	var req = http.request(options, function(res) {
-    res.setEncoding('utf8');
-    res.on('data', function (chunk) {
-      output += chunk;
-    });
-
-		res.on('end', function() {
-    	response.send(output);
-    });
-  });
-
-	req.end();
-});
-
-*/
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
