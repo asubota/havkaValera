@@ -6,15 +6,20 @@
 var CategoryMenu = React.createClass({
   componentDidUpdate: function(){
     $('.dropdown-toggle').dropdown();
-    console.log("[info] Cat menu");
   },
   getInitialState: function(){
     return {categories: []}
   },
+  filterCat: function(cat){
+    return function(){
+      console.log("[info] filter cat", cat);
+      RRestBox.setState({filterCat: cat});
+    };
+  },
   render: function(){
     var cat_items = this.state.categories.map(function(c){
-      return <li><a href="#">{c}</a></li>;
-    });
+      return <li><a href="#" onClick={this.filterCat(c)}>{c}</a></li>;
+    }.bind(this));
     return (<div className="menu-fix">
               <a href="#" className="dropdown-toggle" data-toggle="dropdown">
                 <img width="40" height="40" src="images/icons/svg/clipboard.svg" alt="Pocket" />
@@ -41,10 +46,10 @@ var RestItem = React.createClass({
 
 var RestorantList = React.createClass({
   render: function() {
-    var cat = this.props.filter.category;
+    var cat = this.props.filterCat;
     var items = this.props.data.filter(function(r){
             if (cat){
-              return r.category.indexOf(cat);
+              return !!r.category.indexOf(cat);
             } else {
               return true;
             }
@@ -57,33 +62,23 @@ var RestorantList = React.createClass({
 
 
 var RestorantsBox = React.createClass({
-  componentDidUpdate: function(){
-    RCategoryMenu.setState({categories: [
-  "Кавказский пир",
-  "Пиратский пир",
-  "Охотничий пир",
-  "Шашлык",
-  "Морепродукты",
-  "Салаты"
-  
-    ]});
-  },
   getInitialState: function() {
    $.ajax({
       url: '/restaurant',
       dataType: 'json',
       mimeType: 'textPlain',
       success: function(data) {
-        console.log("[info]", data[0]);
         var keys = {};
         var categories = []
-        data.map(function(r){keys[r.category]=0;});
+        data.map(function(r){
+          var l = $.map(r.category, function(c){return c.split(",")});
+          r.category = l;
+          $.each(l, function(i, c){ keys[c]=0; });
+        });
         for (k in keys){
           categories.push(k);
         }
-        console.log("[info] categories", categories);
-
-        
+        RCategoryMenu.setState({categories: categories});
         this.setState({
           visible: true,
           data: data
@@ -92,15 +87,16 @@ var RestorantsBox = React.createClass({
     });
     return {
       data: [],
-      filter: {category: undefined},
+      filterCat: undefined,
       visible: false
     };
   },
   render: function() {
-    if (this.state.visible && this.state.filter.category) {
+    var cat = this.state.filterCat;
+    if (this.state.visible && cat) {
       return (
             <div className="List">
-              <RestorantList data={this.state.data} filter={this.state.filter}/>
+              <RestorantList data={this.state.data} filterCat={cat}/>
             </div>
         );
     }
@@ -108,7 +104,7 @@ var RestorantsBox = React.createClass({
   }
 });
 
-React.renderComponent(
+var RRestBox = React.renderComponent(
   <RestorantsBox />,
   document.getElementById('resorantsbox')
 );
