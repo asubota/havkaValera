@@ -39,7 +39,7 @@ public class UserAuth {
                         User user = null;
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String id = jsonObject.getString("id");
+                            String id = jsonObject.getString("_id");
                             user = new User(id);
                         } catch (JSONException ignored) {
                         }
