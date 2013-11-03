@@ -9,7 +9,7 @@ restaurants = []
 def get_menu(hash)
   meals = []
 
-  restaurant_page = Nokogiri::HTML(open("http://hrum.com.ua/menu/#{hash}")).css('.menu_list').each do |rest|
+  restaurant_page = Nokogiri::HTML(open("http://hrum.com.ua/menu/adriano")).css('.menu_list').each do |rest|
       meal_category = rest.css('.menu_btn').text.strip
       category_meal = rest.css('.menu_togle li').each do |meal|
         next unless meal.at_css('.pic')
@@ -17,23 +17,21 @@ def get_menu(hash)
         key       = meal['id']
         meal_name = meal.css('.about_box .title a').text.strip
         meal_text = meal.css('.about_box .text').text.strip
-        meal_price= meal.css('.price_box .price').text
+        meal_price= meal.css('.price_box div.price').text
 
         meal_hash = meal.css('.pic a')[0]['href'].sub('/menu/', '').split('/')
         parent    = meal_hash[0]
         hash      = meal_hash[1]
-      
-=begin
 
         image_path_orig  = meal.css('.pic .big_pic img')[0]['data-original']
         image_path_local = "../public/media/#{parent}/food/" + image_path_orig.sub('/images/', '')  + '.jpg' 
         image = image_path_local.sub('../public', '')
 
+=begin
         dirname = File.dirname(image_path_local)
         unless File.directory?(dirname)
           FileUtils.mkdir_p(dirname)
         end
-        
         open(image_path_local, 'wb') do |file|
           file << open("http://hrum.com.ua#{image_path_orig}").read
         end
@@ -45,8 +43,8 @@ def get_menu(hash)
           parent: parent,
           category: meal_category,
           image: image,
-          price: meal_price.sub(/[^\d]+/, ''),
-          currency: meal_price.sub(/[\d\s]+грн\./, 'UAH'),
+          price: meal_price.sub('грн.', '').strip,
+          currency: 'UAH',
           name: meal_name,
           description: meal_text
         }
@@ -57,7 +55,6 @@ def get_menu(hash)
 
   meals
 end
-
 
 doc = Nokogiri::HTML(open('http://hrum.com.ua/restaurants/all/kiev')).css('.item_box').each do |item|
 
@@ -72,7 +69,7 @@ doc = Nokogiri::HTML(open('http://hrum.com.ua/restaurants/all/kiev')).css('.item
 
   note = item.css('.note').text.strip
 
-  min_cost      = item.css('.info_box li')[1].css('span').text
+  min_cost      = item.css('.info_box li')[1].css('span').text.sub('грн.', '').strip
   delivery_time = item.css('.info_box li')[5].css('span').text.sub(/[^\d]+/, '')
   delivery      = item.css('.info_box li')[3].css('span').text.split
   category      = item.css('.info_box li')[2].css('span').text.split(/[,.\\\/]/).map(&:strip)
@@ -108,7 +105,7 @@ doc = Nokogiri::HTML(open('http://hrum.com.ua/restaurants/all/kiev')).css('.item
         min_cost: min_cost.sub('грн.', '').strip,
         time: delivery_time,
         cost: delivery[0],
-        currency: delivery[1].sub('грн.', 'UAH').strip
+        currency: 'UAH'
       },
       menu: menu
   }
