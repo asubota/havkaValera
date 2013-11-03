@@ -88,9 +88,13 @@ function show_venues_on_map(venues) {
 
 	placemarks.add(current_pos);
 	
-  jQuery.each(venues, function() {	
-	  var placemark = new ymaps.Placemark([this.lat, this.lng], { content: this.title, balloonContent: this.title+'<br/><small>'+this.address.street+'</small>' });
-	  placemarks.add(placemark);
+    jQuery.each(venues, function() {	
+        var placemark = new ymaps.Placemark([this.lat, this.lng], { content: this.title, balloonContent: this.title+'<br/><small>'+this.address.street+'</small>' });
+        placemark.venus = this;
+        placemark.events.add('click', function ( e ) {
+            console.log( e._fb.target );
+        });
+        placemarks.add(placemark);
 	});
 
 	// Adding the collection to the map.

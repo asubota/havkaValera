@@ -43,7 +43,7 @@ exports.getOrders = function( req, res ){
 
 exports.saveOrder = function( req, res ){
 
-    if( req.user === undefined ){
+    if( req.user === undefined && orderParams.user_id === undefined ){
         res.send( { "error" : "user" } );
     }else if( req.body === undefined ){
         res.send( { "error" : "no order" } );
@@ -52,6 +52,8 @@ exports.saveOrder = function( req, res ){
         orderParams.date = new Date();
         orderParams.status = 'new';
         orderParams.user_id = req.user.id;
+
+        console.log( orderParams );
 
         getAdressByLngLat( orderParams.lng, orderParams.lat, function( data ){
             orderParams.address = data;
