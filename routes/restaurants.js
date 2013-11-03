@@ -63,6 +63,39 @@ exports.categories = function(req, res){
  * GET Restaurant
  */
 
+exports.getRestaurantByCategory = function(req, res){
+    MongoClient.connect( mongoCreds , function(err, db) {
+        if(err){
+            console.log( "DB connection error: " + err );
+            res.send( [] );
+            db.close();
+        }else{
+            var restaurantsCollection = db.collection('restaurants');
+            restaurantsCollection.find().toArray(function(err, results) {
+
+                var categories = [];
+                var requested_categories = req.params.category.split('&');
+
+                if(err){
+                    console.log( "Collection find error: " + err );
+                    res.send( {} );
+                }else{
+                    for( var i = 0; i < results.length; i++ ){
+                        var intersection = _.intersection(requested_categories, results[i].category);
+                        if( intersection.length ){
+                            categories.push( results[i] );
+                        }
+                    }
+
+                    res.send( categories );
+
+                }
+                db.close();
+            });
+        }
+    });
+};
+
 exports.getRestaurantById = function(req, res){
     MongoClient.connect( mongoCreds , function(err, db) {
         if(err){
