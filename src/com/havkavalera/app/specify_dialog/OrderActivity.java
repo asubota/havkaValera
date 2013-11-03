@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -90,6 +91,9 @@ public class OrderActivity extends Activity implements UserAuth.UserListener {
         if (user != null) {
             orderSend.sendRequest(url, user.mId, order);
         }
+
+        Toast.makeText(this, "Your order sent to server.", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override

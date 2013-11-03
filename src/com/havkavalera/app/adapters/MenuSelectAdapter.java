@@ -55,7 +55,7 @@ public class MenuSelectAdapter extends BaseAdapter {
         menuPrice.setText(String.valueOf(menuItem.getPrice()));
 
         final TextView itemsOrdered = (TextView) view.findViewById(R.id.items_ordered);
-        itemsOrdered.setText(String.valueOf(menuItem.getPrice()));
+        itemsOrdered.setText(String.valueOf(menuItem.getOrdered()));
 
         Button orderItem = (Button) view.findViewById(R.id.order);
         orderItem.setOnClickListener(new View.OnClickListener() {
