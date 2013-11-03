@@ -2,14 +2,10 @@ ymaps.ready(init);
 
 var myMap, currentPosition, placemarks;
 
-function resizeMap() {
-	jQuery('#map').css({width: window.innerWidth, height: (window.innerHeight - $('section.col-md-12').height()) });
-}
 
 function init(){ 
-	resizeMap();
 	
-	myMap = new ymaps.Map ("map", {
+	myMap = new ymaps.Map ("yamap", {
   	center: [50.450949,30.522622],
     zoom: 15,
 		autoFitToViewport: 'always'
@@ -27,9 +23,7 @@ function init(){
 	placemarks = new ymaps.GeoObjectCollection();
 	navigator.geolocation.getCurrentPosition(show_map, handle_error);
 	
-	$(window).change(function() { 
-		resizeMap();
-	});
+
 	
 	$('.where_am_i').click(function() {
 		navigator.geolocation.getCurrentPosition(show_where_am_i, handle_error);

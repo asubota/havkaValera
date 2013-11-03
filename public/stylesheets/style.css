@@ -9,3 +9,15 @@
   display: block;
   padding: 10px 15px;
 }
+#maino {
+  padding: 0;
+  background: #bdc3c7;
+}
+#yamap {
+  height: 900px;
+  padding: 0;
+}
+#resorantsbox {
+  background: #ecf0f1;
+  padding: 0;
+}
