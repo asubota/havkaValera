@@ -93,7 +93,7 @@ var RestorantsBox = React.createClass({
   },
   render: function() {
     var cat = this.state.filterCat;
-    if (this.state.visible && cat) {
+    if (this.state.visible) {
       return (
             <div className="List">
               <RestorantList data={this.state.data} filterCat={cat}/>

@@ -82,6 +82,9 @@ function remove_old_placemarks() {
 }
 
 function show_venues_on_map(venues) {
+  RRestBox.setState({filterCat: undefined,
+                     data: venues});
+  
 	// Creating a collection of geo objects.
 	//var placemarks = new ymaps.GeoObjectCollection();
 	var current_pos = new ymaps.Placemark([currentPosition.coords.latitude, currentPosition.coords.longitude], { 
