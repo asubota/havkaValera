@@ -16,4 +16,5 @@
     <string name="app_id">524769977614277</string>
     <string name="price">Price:</string>
     <string name="count">Count:</string>
+    <string name="phone_number">Phone Number</string>
 </resources>

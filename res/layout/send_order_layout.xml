@@ -4,6 +4,13 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <EditText
+            android:id="@+id/phone_number"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:hint="@string/phone_number"
+            android:phoneNumber="true"
+            />
     <ListView
             android:id="@+id/ordered_menu_items"
             android:layout_height="0dp"

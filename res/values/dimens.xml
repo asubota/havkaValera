@@ -12,4 +12,5 @@
     <dimen name="dimen_30dp">30dp</dimen>
     <dimen name="dimen_130dp">130dp</dimen>
     <dimen name="dimen_5dp">5dp</dimen>
+    <dimen name="dimen_150dp">150dp</dimen>
 </resources>

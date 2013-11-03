@@ -4,14 +4,19 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.facebook.Request;
@@ -33,12 +38,15 @@ import java.security.NoSuchAlgorithmException;
 public class OrderActivity extends Activity implements UserAuth.UserListener {
 
     public static final String ORDER_KEY = "com.havka.ORDER_KEY";
+    private static final String PREF = "com.havka.PREFERENCES";
+    private static final String PHONE_NUMBER = "com.havka.PHONE_NUMBER";
 
     private String user_ID;
     private OrderedMenuAdapter orderedMenuAdapter;
     private Order order;
     private User user;
     private ProgressDialog progressDialog;
+    private EditText phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +81,16 @@ public class OrderActivity extends Activity implements UserAuth.UserListener {
 
         order = getIntent().getParcelableExtra(ORDER_KEY);
 
+        phoneNumber = (EditText) findViewById(R.id.phone_number);
+        SharedPreferences pref = getSharedPreferences(PREF, Context.MODE_WORLD_READABLE);
+        String readNumber = pref.getString(PHONE_NUMBER, "");
+        phoneNumber.setText(readNumber);
+        if (!TextUtils.isEmpty(readNumber)) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(phoneNumber.getWindowToken(), 0);
+        }
+
         ListView listView = (ListView) findViewById(R.id.ordered_menu_items);
         orderedMenuAdapter = new OrderedMenuAdapter(order.getOrderedMenu());
         listView.setAdapter(orderedMenuAdapter);
@@ -91,6 +109,12 @@ public class OrderActivity extends Activity implements UserAuth.UserListener {
         if (user != null) {
             orderSend.sendRequest(url, user.mId, order);
         }
+
+        SharedPreferences pref = getSharedPreferences(PREF, Context.MODE_WORLD_READABLE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(PHONE_NUMBER, phoneNumber.getText().toString());
+        editor.commit();
+
 
         Toast.makeText(this, "Your order sent to server.", Toast.LENGTH_SHORT).show();
         finish();
