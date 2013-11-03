@@ -1,13 +1,11 @@
 package com.havkavalera.app.specify_dialog;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.android.volley.toolbox.NetworkImageView;
 import com.havkavalera.app.R;
 import com.havkavalera.app.VolleySingleton;
@@ -25,11 +23,12 @@ public class DetailedRestaurantActivity extends Activity implements MenuGetter.M
     public static final String RESTAURANT_KEY = "com.havkavalera.RESTAURANT_KEY";
 
     private Restaurant mRestaurant;
-//    private MapView mMap;
 
     private MenuSelectAdapter menuSelectAdapter;
 
     private ArrayList<MenuItem> mMenuItems = new ArrayList<MenuItem>();
+
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public class DetailedRestaurantActivity extends Activity implements MenuGetter.M
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        mMap = (MapView) findViewById(R.id.map);
+        progressDialog = ProgressDialog.show(this, "Please wait", "Loading restaurant menu", false, false);
 
         mRestaurant = getIntent().getParcelableExtra(RESTAURANT_KEY);
 
@@ -56,8 +55,6 @@ public class DetailedRestaurantActivity extends Activity implements MenuGetter.M
         menuGetter.setMenuListener(this);
         menuGetter.requestMenuForRestaurant(mRestaurant.mId);
 
-//        putMapBaloon();
-
         ListView listView = (ListView) findViewById(R.id.restaurant_menu);
         menuSelectAdapter = new MenuSelectAdapter(mMenuItems);
         listView.setAdapter(menuSelectAdapter);
@@ -73,22 +70,6 @@ public class DetailedRestaurantActivity extends Activity implements MenuGetter.M
             }
         });
 
-    }
-
-    private void putMapBaloon() {
- //        MapController mapController = mMap.getMapController();
-//        OverlayManager overlayManager = mapController.getOverlayManager();
-//        Overlay overlay = new Overlay(mapController);
-
-//        Resources res = getResources();
-//        double[] coords = mRestaurant.getCoordinates();
-//        final OverlayItem rest = new OverlayItem(new GeoPoint(coords[0], coords[1]), res.getDrawable(R.drawable.map_location));
-
-//        BalloonItem balloonYandex = new BalloonItem(this, rest.getGeoPoint());
-//        balloonYandex.setText(mRestaurant.mName);
-
-//        overlay.addOverlayItem(rest);
-//        overlayManager.addOverlay(overlay);
     }
 
     @Override
@@ -110,5 +91,6 @@ public class DetailedRestaurantActivity extends Activity implements MenuGetter.M
         } else {
             Toast.makeText(this, "Failed load restaurant menu", Toast.LENGTH_SHORT).show();
         }
+        progressDialog.dismiss();
     }
 }

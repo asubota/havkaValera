@@ -1,6 +1,7 @@
 package com.havkavalera.app.specify_dialog;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
@@ -26,10 +27,14 @@ public class SelectRestaurantActivity extends Activity implements RestaurantsGet
     private List<Restaurant> mRestaurants = new ArrayList<Restaurant>();
     private RestaurantSelectAdapter rsa;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_list_layout);
+
+        progressDialog = ProgressDialog.show(this, "Please wait", "Loading restaurants list", false, false);
 
         ListView listView = (ListView) findViewById(R.id.selected_list);
         rsa = new RestaurantSelectAdapter(mRestaurants);
@@ -53,6 +58,8 @@ public class SelectRestaurantActivity extends Activity implements RestaurantsGet
         final RestaurantsGetter restaurantsGetter = new RestaurantsGetter(this);
         restaurantsGetter.setRestaurantListener(this);
         setRestaurantRequest(restaurantsGetter, searchDistance);
+
+
     }
 
     private void setRestaurantRequest(RestaurantsGetter restaurantsGetter, int radius) {
@@ -84,5 +91,6 @@ public class SelectRestaurantActivity extends Activity implements RestaurantsGet
         } else {
             Toast.makeText(this, "Failed to load restaurants", Toast.LENGTH_SHORT).show();
         }
+        progressDialog.dismiss();
     }
 }
