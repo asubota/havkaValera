@@ -9,6 +9,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.havkavalera.app.ConnectionInfo;
 import com.havkavalera.app.VolleySingleton;
+import com.havkavalera.app.model.User;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +26,7 @@ public class UserAuth {
     }
 
     public void sendUserRegisterRequest(String userID) {
-        String url = ConnectionInfo.getHttpHostAddress() + "user/light";
+        String url = ConnectionInfo.getHttpHostAddress() + "/user/light";
         Log.d("Request", url);
         sendRequest(url, userID);
     }
@@ -33,10 +36,17 @@ public class UserAuth {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        User user = null;
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String id = jsonObject.getString("id");
+                            user = new User(id);
+                        } catch (JSONException ignored) {
+                        }
                         // response
                         Log.d("Response", response);
                         if (userListener != null) {
-                            userListener.userDataReceived();
+                            userListener.userDataReceived(user);
                         }
                     }
                 },
@@ -46,7 +56,7 @@ public class UserAuth {
                         // error
                         Log.d("Error.Response", error.toString());
                         if (userListener != null) {
-                            userListener.userDataReceived();
+                            userListener.userDataReceived(null);
                         }
                     }
                 }
@@ -66,6 +76,6 @@ public class UserAuth {
     }
 
     public interface UserListener {
-        public void userDataReceived();
+        public void userDataReceived(User user);
     }
 }

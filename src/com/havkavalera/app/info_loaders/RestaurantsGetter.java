@@ -31,7 +31,7 @@ public class RestaurantsGetter {
 
     public void requestAllRestaurants() {
         String url = ConnectionInfo.getHttpHostAddress();
-        url += "restaurant/";
+        url += "/restaurant/";
         Log.d("Connect", "Connecting url: " + url);
 
         sendRequestArray(url);
@@ -39,7 +39,7 @@ public class RestaurantsGetter {
 
     public void requestRestaurantsByPosition(double lng, double lat, int radius) {
         String url = ConnectionInfo.getHttpHostAddress();
-        url += "restaurant/" + lng + "/" + lat + "/" + radius;
+        url += "/restaurant/" + lng + "/" + lat + "/" + radius;
         Log.d("Connect", "Connecting url: " + url);
         sendRequestArray(url);
     }
@@ -74,7 +74,7 @@ public class RestaurantsGetter {
 
     public void requestRestaurantById(String id) {
         String url = ConnectionInfo.getHttpHostAddress();
-        url += "restaurant/" + id;
+        url += "/restaurant/" + id;
         sendRequest(url);
     }
 

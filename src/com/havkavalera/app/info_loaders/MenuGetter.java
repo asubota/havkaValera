@@ -27,7 +27,7 @@ public class MenuGetter {
     }
 
     public void requestMenuForRestaurant(String restaurantKey) {
-        String url = ConnectionInfo.getHttpHostAddress()  + "restaurant/" + restaurantKey + "/menu/";
+        String url = ConnectionInfo.getHttpHostAddress()  + "/restaurant/" + restaurantKey + "/menu/";
         Log.d("Connection", "Connection url: " + url);
         sendRequestArray(url);
 

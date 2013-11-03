@@ -12,10 +12,12 @@ public class Order implements Parcelable {
     private static final String MENU_LIST = "MENU_LIST";
 
     private ArrayList<MenuItem> orderedMenu = new ArrayList<MenuItem>();
+    private Restaurant restaurant;
     private int total = 0;
 
-    public Order(ArrayList<MenuItem> orderedMenu) {
+    public Order(Restaurant restaurant, ArrayList<MenuItem> orderedMenu) {
         this.orderedMenu = orderedMenu;
+        this.restaurant = restaurant;
 
         for (MenuItem menuItem : orderedMenu) {
             if (menuItem.getOrdered() > 0) {
@@ -27,13 +29,14 @@ public class Order implements Parcelable {
     public Order(Parcel source) {
         source.readList(orderedMenu, MenuItem.class.getClassLoader());
         total = source.readInt();
+        restaurant = source.readParcelable(Restaurant.class.getClassLoader());
     }
 
     public List<MenuItem> getOrderedMenu() {
         List<MenuItem> menuItems = new ArrayList<MenuItem>();
         for (int i = 0; i < orderedMenu.size(); i++) {
-            if (((MenuItem)orderedMenu.get(i)).getOrdered() > 0) {
-                menuItems.add((MenuItem)orderedMenu.get(i));
+            if ((orderedMenu.get(i)).getOrdered() > 0) {
+                menuItems.add(orderedMenu.get(i));
             }
         }
         return menuItems;
@@ -41,6 +44,10 @@ public class Order implements Parcelable {
 
     public int getTotal() {
         return total;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
     @Override
@@ -52,6 +59,7 @@ public class Order implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeList(orderedMenu);
         dest.writeInt(total);
+        dest.writeParcelable(restaurant, flags);
     }
 
     public static final Parcelable.Creator<Order> CREATOR = new Parcelable.Creator<Order>() {
@@ -63,4 +71,5 @@ public class Order implements Parcelable {
             return new Order[size];
         }
     };
+
 }

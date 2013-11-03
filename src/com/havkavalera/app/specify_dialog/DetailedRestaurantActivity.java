@@ -67,7 +67,7 @@ public class DetailedRestaurantActivity extends Activity implements MenuGetter.M
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailedRestaurantActivity.this, OrderActivity.class);
-                Order order = new Order(mMenuItems);
+                Order order = new Order(mRestaurant, mMenuItems);
                 intent.putExtra(OrderActivity.ORDER_KEY, order);
                 startActivity(intent);
             }
