@@ -83,6 +83,7 @@ exports.getRestaurantByCategory = function(req, res){
                     for( var i = 0; i < results.length; i++ ){
                         var intersection = _.intersection(requested_categories, results[i].category);
                         if( intersection.length ){
+                            delete results[i].menu;
                             categories.push( results[i] );
                         }
                     }
@@ -179,6 +180,48 @@ exports.getRestaurantByLocation = function(req, res){
                         delete results[i].menu;
                         resp.push(results[i]);
                     }
+                    res.send( resp );
+                }
+                db.close();
+            });
+        }
+    });
+};
+
+exports.getRestaurantByLocationAndCategory = function(req, res){
+    MongoClient.connect( mongoCreds , function(err, db) {
+        if(err){
+            console.log( "DB connection error: " + err );
+            res.send( [] );
+            db.close();
+        }else{
+
+            var findQuery = {
+                lat : {
+                    $gt : req.params.lat - dLat( req.params.r ),
+                    $lt : parseFloat( req.params.lat ) + parseFloat( dLat( req.params.r ) )
+                },
+                lng : {
+                    $gt : req.params.lng - dLon( req.params.r, req.params.lat ),
+                    $lt : parseFloat( req.params.lng ) + parseFloat( dLon( req.params.r, req.params.lat ) )
+                }
+            };
+
+            var requested_categories = req.params.category.split('&');
+            var restaurantsCollection = db.collection('restaurants');
+            restaurantsCollection.find( findQuery ).toArray(function(err, results) {
+                if(err){
+                    res.send( [] );
+                }else{
+                    var resp = [];
+                    for( var i = 0; i < results.length; i++ ){
+                        var intersection = _.intersection(requested_categories, results[i].category);
+                        if( intersection.length ){
+                            delete results[i].menu;
+                            resp.push(results[i]);
+                        }
+                    }
+
                     res.send( resp );
                 }
                 db.close();

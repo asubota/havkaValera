@@ -122,7 +122,7 @@ app.get('/restaurant/:id'                   , restaurants.getRestaurantById );
 app.get('/restaurant/:id/menu'              , restaurants.getRestaurantMenu );
 app.get('/restaurant/:lng/:lat/:r'          , restaurants.getRestaurantByLocation );
 
-app.get('/restaurant/:lng/:lat/:r/:category' , function( req, res ){ res.send( "TODO!!!!" ); }); // TO
+app.get('/restaurant/categories/:lng/:lat/:r/:category' , restaurants.getRestaurantByLocationAndCategory ); // TO
 
 /*
  * Restaurants routes
