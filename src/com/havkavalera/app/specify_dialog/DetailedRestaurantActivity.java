@@ -2,7 +2,10 @@ package com.havkavalera.app.specify_dialog;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -59,12 +62,16 @@ public class DetailedRestaurantActivity extends Activity implements MenuGetter.M
         menuSelectAdapter = new MenuSelectAdapter(mMenuItems);
         listView.setAdapter(menuSelectAdapter);
 
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        final Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
         Button makeOrder = (Button) findViewById(R.id.make_order_all);
         makeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailedRestaurantActivity.this, OrderActivity.class);
                 Order order = new Order(mRestaurant, mMenuItems);
+                order.setCoords(location.getLatitude(), location.getLongitude());
                 intent.putExtra(OrderActivity.ORDER_KEY, order);
                 startActivity(intent);
             }

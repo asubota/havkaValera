@@ -15,6 +15,11 @@ public class Order implements Parcelable {
     private Restaurant restaurant;
     private float total = 0;
 
+    private String phoneNumber;
+
+    private double lat;
+    private double lng;
+
     public Order(Restaurant restaurant, ArrayList<MenuItem> orderedMenu) {
         this.orderedMenu = orderedMenu;
         this.restaurant = restaurant;
@@ -30,6 +35,8 @@ public class Order implements Parcelable {
         source.readList(orderedMenu, MenuItem.class.getClassLoader());
         total = source.readFloat();
         restaurant = source.readParcelable(Restaurant.class.getClassLoader());
+        lat = source.readDouble();
+        lng = source.readDouble();
     }
 
     public List<MenuItem> getOrderedMenu() {
@@ -50,6 +57,23 @@ public class Order implements Parcelable {
         return restaurant;
     }
 
+    public void setCoords(double lat, double lng) {
+        this.lat = lat;
+        this.lng = lng;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public double[] getCoords() {
+        return new double[] {lat, lng};
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -60,6 +84,8 @@ public class Order implements Parcelable {
         dest.writeList(orderedMenu);
         dest.writeFloat(total);
         dest.writeParcelable(restaurant, flags);
+        dest.writeDouble(lat);
+        dest.writeDouble(lng);
     }
 
     public static final Parcelable.Creator<Order> CREATOR = new Parcelable.Creator<Order>() {

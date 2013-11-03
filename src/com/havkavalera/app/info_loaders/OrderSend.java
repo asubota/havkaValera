@@ -59,12 +59,10 @@ public class OrderSend {
                 Map<String, String> params = new HashMap<String, String>();
                 Restaurant restaurant = order.getRestaurant();
                 params.put("restaurant", restaurant.mId);
-                params.put("lat", String.valueOf(restaurant.getCoordinates()[0]));
-                params.put("lng", String.valueOf(restaurant.getCoordinates()[1]));
+                params.put("lat", String.valueOf(order.getCoords()[0]));
+                params.put("lng", String.valueOf(order.getCoords()[1]));
 
-                TelephonyManager tMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                String mPhoneNumber = tMgr.getLine1Number();
-                params.put("phone", mPhoneNumber);
+                params.put("phone", order.getPhoneNumber());
                 params.put("description", "");
                 params.put("amount", String.valueOf(order.getTotal()));
                 params.put("currency", "UAH");

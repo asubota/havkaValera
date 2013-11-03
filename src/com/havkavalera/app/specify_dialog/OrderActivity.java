@@ -126,6 +126,7 @@ public class OrderActivity extends Activity implements UserAuth.UserListener {
             editor.commit();
 
             if (user != null) {
+                order.setPhoneNumber(phoneNumber.getText().toString());
                 orderSend.sendRequest(url, user.mId, order);
             }
 
