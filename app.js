@@ -115,14 +115,14 @@ app.get('/town/:id'   , town.getTownById);
  * Restaurants routes
  * BEGIN
  */
-app.get('/restaurant'                , restaurants.list);
-app.get('/restaurant/categories'     , restaurants.categories); // TODO: return array
-app.get('/restaurant/:id'            , restaurants.getRestaurantById );
-app.get('/restaurant/:id/menu'       , restaurants.getRestaurantMenu );
-app.get('/restaurant/:lng/:lat/:r'   , restaurants.getRestaurantByLocation );
+app.get('/restaurant'                       , restaurants.list);
+app.get('/restaurant/categories/:category'  , restaurants.getRestaurantByCategory );
+app.get('/restaurant/categories'            , restaurants.categories);
+app.get('/restaurant/:id'                   , restaurants.getRestaurantById );
+app.get('/restaurant/:id/menu'              , restaurants.getRestaurantMenu );
+app.get('/restaurant/:lng/:lat/:r'          , restaurants.getRestaurantByLocation );
 
-app.get('/restaurant/:category'      , function( req, res ){ res.send( "TODO!!!!" ); }); // TO
-app.get('/restaurant/:lng/:lat/:r/:category' , function( req, res ){ res.send( "TODO!!!!" ); }); // TO
+app.get('/restaurant/categories/:lng/:lat/:r/:category' , restaurants.getRestaurantByLocationAndCategory ); // TO
 
 /*
  * Restaurants routes
