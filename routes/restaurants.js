@@ -49,7 +49,7 @@ exports.categories = function(req, res){
                     res.send( [] );
                 }else{
                     for( var i = 0; i < results.length; i++ ){
-                        categories.push(  _.pluck( results[i].menu, 'category' ) );
+                        categories.push( results[i].category );
                     }
                     res.send( _.uniq( _.flatten( categories ) ) );
                 }
