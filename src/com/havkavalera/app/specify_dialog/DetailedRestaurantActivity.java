@@ -14,6 +14,7 @@ import com.havkavalera.app.VolleySingleton;
 import com.havkavalera.app.adapters.MenuSelectAdapter;
 import com.havkavalera.app.info_loaders.MenuGetter;
 import com.havkavalera.app.model.MenuItem;
+import com.havkavalera.app.model.Order;
 import com.havkavalera.app.model.Restaurant;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class DetailedRestaurantActivity extends Activity implements MenuGetter.M
 
     private MenuSelectAdapter menuSelectAdapter;
 
-    private List<MenuItem> mMenuItems = new ArrayList<MenuItem>();
+    private ArrayList<MenuItem> mMenuItems = new ArrayList<MenuItem>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,8 @@ public class DetailedRestaurantActivity extends Activity implements MenuGetter.M
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailedRestaurantActivity.this, OrderActivity.class);
+                Order order = new Order(mMenuItems);
+                intent.putExtra(OrderActivity.ORDER_KEY, order);
                 startActivity(intent);
             }
         });

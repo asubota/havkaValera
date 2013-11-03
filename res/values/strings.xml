@@ -14,4 +14,6 @@
     <string name="ordered">Ordered:</string>
     <string name="make_order">Make Order</string>
     <string name="app_id">524769977614277</string>
+    <string name="price">Price:</string>
+    <string name="count">Count:</string>
 </resources>
