@@ -40,6 +40,7 @@ public class OrderActivity extends Activity implements UserAuth.UserListener {
     public static final String ORDER_KEY = "com.havka.ORDER_KEY";
     private static final String PREF = "com.havka.PREFERENCES";
     private static final String PHONE_NUMBER = "com.havka.PHONE_NUMBER";
+    private static final String USER_KEY = "com.havka.USER_KEY";
 
     private String user_ID;
     private OrderedMenuAdapter orderedMenuAdapter;
@@ -48,45 +49,52 @@ public class OrderActivity extends Activity implements UserAuth.UserListener {
     private ProgressDialog progressDialog;
     private EditText phoneNumber;
 
+    private SharedPreferences pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send_order_layout);
 
-        progressDialog = ProgressDialog.show(this, "Authentithicating user...", "Please wait...", false, false);
+        pref = getSharedPreferences(PREF, Context.MODE_WORLD_READABLE);
 
-        final UserAuth userAuth = new UserAuth(this);
-        userAuth.setUserListener(this);
-        Session.openActiveSession(this, true, new Session.StatusCallback() {
-            @Override
-            public void call(final Session session, SessionState state, Exception exception) {
-                if (session != null && session.isOpened()) {
-                    // If the session is open, make an API call to get user data
-                    // and define a new callback to handle the response
-                    Request request = Request.newMeRequest(session, new Request.GraphUserCallback() {
-                        @Override
-                        public void onCompleted(GraphUser user, Response response) {
-                            // If the response is successful
-                            if (user != null) {
-                                user_ID = user.getId();
-                                Log.d("FB", "User id: " + user_ID);
-                                userAuth.sendUserRegisterRequest(user_ID);
+        String userID = pref.getString(USER_KEY, "");
+        if (TextUtils.isEmpty(userID)) {
+            progressDialog = ProgressDialog.show(this, "Authentithicating user...", "Please wait...", false, false);
+            final UserAuth userAuth = new UserAuth(this);
+            userAuth.setUserListener(this);
+            Session.openActiveSession(this, true, new Session.StatusCallback() {
+                @Override
+                public void call(final Session session, SessionState state, Exception exception) {
+                    if (session != null && session.isOpened()) {
+                        // If the session is open, make an API call to get user data
+                        // and define a new callback to handle the response
+                        Request request = Request.newMeRequest(session, new Request.GraphUserCallback() {
+                            @Override
+                            public void onCompleted(GraphUser user, Response response) {
+                                // If the response is successful
+                                if (user != null) {
+                                    user_ID = user.getId();
+                                    Log.d("FB", "User id: " + user_ID);
+                                    userAuth.sendUserRegisterRequest(user_ID);
+                                }
                             }
-                        }
-                    });
-                    Request.executeBatchAsync(request);
+                        });
+                        Request.executeBatchAsync(request);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            user = new User(userID);
+        }
 
         order = getIntent().getParcelableExtra(ORDER_KEY);
 
         phoneNumber = (EditText) findViewById(R.id.phone_number);
-        SharedPreferences pref = getSharedPreferences(PREF, Context.MODE_WORLD_READABLE);
         String readNumber = pref.getString(PHONE_NUMBER, "");
         phoneNumber.setText(readNumber);
         if (!TextUtils.isEmpty(readNumber)) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(
+            InputMethodManager imm = (InputMethodManager) getSystemService(
                     Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(phoneNumber.getWindowToken(), 0);
         }
@@ -129,6 +137,9 @@ public class OrderActivity extends Activity implements UserAuth.UserListener {
     @Override
     public void userDataReceived(User user) {
         this.user = user;
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(USER_KEY, user.mId);
+        editor.commit();
         progressDialog.dismiss();
     }
 }
